@@ -1,0 +1,319 @@
+{% extends 'EasyAdminBundle:default:layout.html.twig' %}
+{% block content %}
+    <div style="text-align:center;background-color:#F58334; width: 100%; height:50px;"><h3>Panel de Administración: Loteria Chaqueña</h3></div>
+
+	
+	{% block head_stylesheets %}
+	    {{parent()}}
+	   <link rel="stylesheet" type="text/css" href="{{asset('assets/menu/demo.css')}}" />
+       <link rel="stylesheet" type="text/css" href="{{asset('assets/menu/style3.css')}}" />
+       <link href='http://fonts.googleapis.com/css?family=Terminal+Dosis' rel='stylesheet' type='text/css' />
+        <!-- Archivos para los graficos del google analytics -->
+       
+	{% endblock %}
+
+        <div class="row">
+          
+            <div class="col-md-12" style="text-align:center;">
+                <section id="auth-button"></section>
+            </div>
+            <br>
+            <br>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-6">
+                <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Total de visitas</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body text-center">
+<!--                     <section id="view-selector"></section>
+ -->                    <div style="margin-left:auto;margin-right:auto;">
+                        <div id="date-range-selector-1-container"></div>
+                        <div id="timeline"></div>
+                        <div id="data-chart-1-container"></div>
+                        
+                    </div>
+                    
+                                        
+                </div>
+                <!-- /.box-body -->
+              </div>
+            </div>
+           <div class="col-md-5">
+                <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title">10 secciones más visitadas</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body text-center">
+                    <section id="auth-button"></section>
+<!--                     <section id="view-selector"></section>
+ -->                    <div style="margin-left:auto;margin-right:auto;">
+                       <div id="date-range-selector-2-container"></div>
+                       <div id="chart-2-container"></div>
+                    </div>
+                    
+                    
+                                        
+                </div>
+                <!-- /.box-body -->
+              </div>
+           </div>
+
+
+          
+           <div class="col-md-10  col-md-offset-1">
+                <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Visitas por pagina</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body text-center">
+                    <section id="auth-button"></section>
+<!--                     <section id="view-selector"></section>
+
+ -->                    <div style="margin-left:auto;margin-right:auto;">
+                       <div id="embed-api-auth-container"></div>
+                        <div id="date-range-selector-3-container"></div>
+                        <div id="main-chart-container"></div>
+                        <br>
+                        
+                       
+                    </div>
+                    
+                                        
+                </div>
+                <!-- /.box-body -->
+              </div>
+           </div>
+
+
+
+            
+            
+        </div>
+        
+                
+
+               
+
+                <script>
+                (function(w,d,s,g,js,fjs){
+                  g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(cb){this.q.push(cb)}};
+                  js=d.createElement(s);fjs=d.getElementsByTagName(s)[0];
+                  js.src='https://apis.google.com/js/platform.js';
+                  fjs.parentNode.insertBefore(js,fjs);js.onload=function(){g.load('analytics')};
+                }(window,document,'script'));
+                </script>
+                 <script src="{{asset('assets/google_analytics/active-users.js')}}"></script>
+                 <script src="{{asset('assets/google_analytics/date-range-selector.js')}}"></script>
+                 <script src="{{asset('assets/google_analytics/view-selector2.js')}}"></script>  
+ 
+                <script>
+                gapi.analytics.ready(function() {
+
+                  // Step 3: Authorize the user.
+
+                  var CLIENT_ID = '204305933991-tf7sffkr8ks7gesf5gltv3oo0je3refo.apps.googleusercontent.com';
+
+                  gapi.analytics.auth.authorize({
+                   'serverAuth': {
+                     'access_token': '{{ accessToken }}'}
+                  });
+
+
+                  // Step 4: Create the view selector.
+
+                  var viewSelector = new gapi.analytics.ViewSelector({
+                    container: 'view-selector'
+                  });
+
+
+                  //Configuracion comun entre los graficos
+                  var commonConfig = {
+                    query: {
+                      dimensions: 'ga:date'
+                    },
+                  };
+
+                  //Rango inicial de fechas para el grafico de lineas
+                    var dateRange1 = {
+                      'start-date': '30daysAgo',
+                      'end-date': 'today'
+                    };
+
+
+                  //Rango incial de fechas para el grafico de torta
+                    var dateRange2 = {
+                      'start-date': '30daysAgo',
+                      'end-date': 'today'
+                    };
+
+
+                  //Rango incial para la tabla de la cantidad de visitas
+                    var dateRange3 = {
+                      'start-date': '30daysAgo',
+                      'end-date': 'today'
+                    };
+
+                  //Creo los inputs de rangos  de fechas para cada grafico
+
+                  //para el primer grafico
+                  var dateRangeSelector1 = new gapi.analytics.ext.DateRangeSelector({
+                    container: 'date-range-selector-1-container'
+                  })
+                  .set(dateRange1)
+                  .execute();
+
+
+                  //Para el segundo grafico
+                  var dateRangeSelector2 = new gapi.analytics.ext.DateRangeSelector({
+                    container: 'date-range-selector-2-container'
+                  })
+                  .set(dateRange2)
+                  .execute();
+
+                  //Para el tercer grafico
+                  var dateRangeSelector3 = new gapi.analytics.ext.DateRangeSelector({
+                    container: 'date-range-selector-3-container'
+                  })
+                  .set(dateRange3)
+                  .execute();
+
+                  // Step 5: Create the timeline chart.
+                  //Cantidad de visitas realizadas al sitio.
+                  var timeline = new gapi.analytics.googleCharts.DataChart({
+                    reportType: 'ga',
+                    query: {
+                      'ids': 'ga:170825270',
+                      'dimensions': 'ga:date',
+                      'start-date': '30daysAgo',
+                      'end-date': 'today',
+                      'metrics': 'ga:pageviews',
+                      
+                    },
+                    chart: {
+                      type: 'LINE',
+                      container: 'timeline'
+                    }
+                  });
+                   timeline.execute();
+
+                  // Step 6: Hook up the components to work together.
+
+                  gapi.analytics.auth.on('success', function(response) {
+                    dataChart2.execute();
+                    mainChart.execute();
+                    timeline.execute();
+
+                  });
+
+                
+                  //porcentaje de las top 7 secciones visitadas
+                  var dataChart2 = new gapi.analytics.googleCharts.DataChart({
+                    query: {
+                      'ids': 'ga:170825270', // <-- Replace with the ids value for your view.
+                      'start-date': '30daysAgo',
+                      'end-date': 'today',
+                      'dimensions': 'ga:date',
+                      'metrics': 'ga:pageviews',
+                      'dimensions': 'ga:pageTitle',
+                      'sort': '-ga:pageviews',
+                      'max-results': 10
+                    },
+                    chart: {
+                      'container': 'chart-2-container',
+                      'type': 'PIE',
+                      'options': {
+                        'width': '100%',
+                        'pieHole': 4/9,
+                      }
+                    }
+                  });
+                  dataChart2.execute();
+
+
+                  //Cantidad de visitas por secciones
+                   var mainChart = new gapi.analytics.googleCharts.DataChart({
+                    query: {
+                      'ids': 'ga:170825270',
+                      'dimensions': 'ga:date',
+                      'start-date': '30daysAgo',
+                      'end-date': 'today',
+                      'dimensions': 'ga:pageTitle',
+                      'metrics': 'ga:pageviews',
+                      // 'max-results': '6'
+                    },
+                    chart: {
+                      type: 'TABLE',
+                      container: 'main-chart-container',
+                      options: {
+                        width: '100%'
+                      }
+                    }
+                  });
+                   mainChart.execute();
+
+
+
+
+
+                                       /**
+                     * Register a handler to run whenever the user changes the date range from
+                     * the first datepicker. The handler will update the first dataChart
+                     * instance as well as change the dashboard subtitle to reflect the range.
+                     */
+                    dateRangeSelector1.on('change', function(data) {
+                      timeline.set({query: data}).execute();
+
+                      // Update the "from" dates text.
+                      var datefield = document.getElementById('from-dates');
+                      datefield.textContent = data['start-date'] + '&mdash;' + data['end-date'];
+                    });
+
+
+                    /**
+                     * Register a handler to run whenever the user changes the date range from
+                     * the second datepicker. The handler will update the second dataChart
+                     * instance as well as change the dashboard subtitle to reflect the range.
+                     */
+                    dateRangeSelector2.on('change', function(data) {
+                      dataChart2.set({query: data}).execute();
+
+                      // Update the "to" dates text.
+                      var datefield = document.getElementById('to-dates');
+                      datefield.textContent = data['start-date'] + '&mdash;' + data['end-date'];
+                    });
+
+
+
+
+
+
+                    /**
+                     * Register a handler to run whenever the user changes the date range from
+                     * the second datepicker. The handler will update the second dataChart
+                     * instance as well as change the dashboard subtitle to reflect the range.
+                     */
+                    dateRangeSelector3.on('change', function(data) {
+                      mainChart.set({query: data}).execute();
+
+                      // Update the "to" dates text.
+                      var datefield = document.getElementById('to-dates');
+                      datefield.textContent = data['start-date'] + '&mdash;' + data['end-date'];
+                    });
+
+
+                });
+
+              document.body.innerHTML = document.body.innerHTML.replace(/"Pageviews"/g, "Visitas");
+
+                </script>
+
+
+
+
+
+{% endblock %}

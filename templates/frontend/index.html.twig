@@ -1,0 +1,232 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %}ONG{% endblock %}
+
+{% block stylesheets %}
+  {{parent()}}
+  <style>
+    @media only screen and (max-width: 700px) {
+      .carrusel-p {
+          max-height: 100px !important;
+      }
+    }
+  </style>
+{% endblock %}
+{% block body %}
+    <header>
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          {% for banner in banners %}
+              {% if loop.index==1 %}
+                <li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index}}" class="active"></li>
+              {% else %}
+                <li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index}}"></li>
+              {% endif %}
+          {% endfor %}
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          <!-- Slide One - Set the background image for this slide in the line below -->
+          {% for banner in banners %}
+              {% if loop.index==1 %}
+                <div class="carousel-item active" style="background-image: url('{{asset('uploads/banners/'~banner.imagen)}}')">
+                  <div class="carousel-caption d-none d-md-block tituloH3">
+                    <h3>{{banner.titulo|raw}}</h3>
+                    <p>{{ (banner.descripcion|length > 100 ? banner.descripcion|slice(0, 100) ~ '...' : banner.descripcion) }}</p>
+                    {% if banner.noticia %}
+                      <div style="text-align:center;">
+                        <a class="btn btn-primary btn-lg active" role="button" href="{{path('detalle_noticia',{'id':banner.noticia.id})}}">Ver Noticia</a>
+                      </div>
+                    {% endif %}
+                    {% if banner.programa %}
+                      <div style="text-align:center;">
+                        <a  class="btn btn-primary btn-lg active" role="button" href="{{path('detalles_programas',{'id':banner.programa.id})}}">Ver Programa</a>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% else %}
+                <div class="carousel-item" style="background-image:  url('{{asset('uploads/banners/'~banner.imagen)}}')">
+                  <div class="carousel-caption d-none d-md-block tituloH3">
+                    <h3>{{banner.titulo|raw}}</h3>
+                    <p>{{ (banner.descripcion|length > 100 ? banner.descripcion|slice(0, 100) ~ '...' : banner.descripcion ) }}</p>
+                    {% if banner.noticia %}
+                      <div style="text-align:center;">
+                        <a class="btn btn-primary btn-lg active" role="button" href="{{path('detalle_noticia',{'id':banner.noticia.id})}}">Ver Noticia</a>
+                      </div>
+                    {% endif %}
+                    {% if banner.programa %}
+                      <div style="text-align:center;">
+                        <a  class="btn btn-primary btn-lg active" role="button" href="{{path('detalles_programas',{'id':banner.programa.id})}}">Ver Programa</a>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+          {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Siguiente</span>
+        </a>
+      </div>
+    </header>
+ <!-- Page Content -->
+    <div class="container">
+      <div class="col-12"></div>
+      <!-- Portfolio Section -->
+		  <div class="row">
+				<div class="container text-center my-3" style="max-height:200px;">
+          <div id="recipeCarousel" style="max-height:200px;"  class="carrusel-p carousel slide carousel-fade w-100" data-ride="carousel">
+              <div class="carousel-inner container" role="listbox">
+              {% if tematicas|length > 0 %}
+                {% set inicio = 0  %}
+                {% for j in 0..(tematicas|length -4) %}
+                  <div class="carousel-item row {% if inicio == 0 %}active{% endif %}" >
+                  {% for i in inicio..(inicio + 3) %}
+                    <div class="col-3 float-left">
+                      <a href="{{path('ver_tematica',{'id':tematicas[i].id})}}" >
+                        <img class="img-fluid" src="{{asset('uploads/tematicas/'~tematicas[i].imagen)}}">
+                      </a>
+                    </div>
+                  {% endfor %}
+                  {% set inicio = inicio + 1  %}
+                </div>
+                {% endfor %}
+                {% endif %}
+              </div>
+              <a class="carousel-control-prev" href="#recipeCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon text-dark" aria-hidden="true"><h1><b><</b></h1></span>
+                <span class="sr-only">Anterior</span>
+              </a>
+              <a class="carousel-control-next" href="#recipeCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon text-dark" aria-hidden="true"><h1><b>></b></h1></span>
+                <span class="sr-only">Siguiente</span>
+              </a>
+          </div>  
+        </div>
+		  </div>
+		  <div class="row mb-4">
+		    <div class="container">
+			    <div class="row">
+            <a class="col-4 sombra" href="{{ path('agenda') }}">
+              <img class="img-fluid" src="img/bn_agenda.png">
+            </a>
+            <a class="col-4 sombra" href="{{ path('registro') }}">
+              <img class="img-fluid" src="img/bn_inscr.png">
+            </a>
+            <a class="col-4 sombra" href="{{ path('listado_ong') }}">
+              <img class="img-fluid" src="img/bn_listado.png">
+            </a>
+		      </div>
+		    </div> 
+    	</div>
+      {# Ultimos programas #}
+      <div style="background-color:#0075b8;color:white;padding-left:30px;"><h3>Programas Destacados</h3></div>
+      <br>
+      <div class="row">
+        {% for programa in ultimos_programas %}
+          <div class="col-lg-3 col-sm-6 portfolio-item">
+            <div class="card h-100">
+              <a href="{{path('detalles_programas',{'id':programa.id})}}" class="hvr-shrink links_articulos"><img class="card-img-top" src="{{asset('uploads/programas/'~programa.imagen)}}" alt="">
+                <div class="card-body">
+                  <h6 class="card-title">
+                    {{programa.titulo|raw}}
+                  </h6>
+                  <p>{{ (programa.resumen|length > 100 ? programa.resumen|slice(0, 100) ~ '...' : programa.resumen)  }}</p>
+                  
+                </div>
+              </a>
+            </div>
+            <div style="background-color:#1879be;width:100%;color:white;padding-left:10px; " >
+                {% if programa.tematicas %}
+                  {% for tematica in programa.tematicas %}
+                    <a class="hashtag_tematica" href="{{path('programas_tematica',{'tematica':tematica.id})}}">#{{tematica.nombre}}</a>&nbsp
+                  {% endfor %} 
+                {% endif %}
+            </div>
+          </div>
+          {% if loop.index is divisible by(4) %}
+            </div>
+            <div class="row">
+          {% endif %}
+        {% endfor %}
+      </div>
+      {# <a href="{{path('programas')}}" class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true">Ver Todos</a> #}
+      <br>
+      <div style="background-color:#0075b8;color:white;padding-left:30px;"><h3>Ultimas Noticias</h3></div>
+      <br>
+      {# Ultimas noticias #}
+       <div class="row">
+        <div class="col-12">
+          <div class="row">
+            {% for noticia in ultimas_noticias %}
+                <div class="col-md-3 col-sm-6 portfolio-item">
+                  <div class="card h-100">
+                    <a href="{{path('detalle_noticia',{'id':noticia.id})}}"  class="hvr-shrink links_articulos" >
+                      
+                      <img class="card-img-top" src="{{asset('uploads/noticias/'~noticia.imagen)}}" alt="">
+                      
+                      <div class="card-body">
+                        <h6 class="card-title">
+                          {{noticia.titulo|raw}}
+                        </h6>
+                        <p class="card-text">
+                          <div><p>{{ (noticia.bajada|length > 100 ? noticia.bajada|slice(0, 100) ~ '...' : noticia.bajada)  }}</p></div>
+                        </p>
+                      </div>
+                    </a>
+                    <div class="h-100 d-flex align-items-end">
+                        <div class="card bg-primary text-white">
+                            <div class="card-header" id="headingOne" style="height: auto; padding-top:0%;padding-bottom:0%;">
+                              <h5 class="mb-0">
+                                <button class="btn btn-link text-white collapsed w-100 text-left" data-toggle="collapse" data-target="#collapse{{ noticia.id }}" aria-controls="collapse{{ noticia.id }}">
+                                  Tematicas
+                                </button>
+                              </h5>
+                            </div>
+                        
+                            <div id="collapse{{ noticia.id }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                              <div class="card-body">
+                                    {% if noticia.tematicas %}
+                                        {% for tematica in noticia.tematicas %}
+                                            <a class="hashtag_tematica" href="{{path('noticias_tematica',{'tematica':tematica.id})}}">#{{tematica.nombre}}</a>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                {% if loop.index is divisible by(4) %}
+                </div>
+                <div class="row">
+                {% endif %}
+            {% endfor %}
+          </div>
+          <div class="col-md-3"></div>
+        </div> 
+      </div>
+      {# <a href="{{path('noticias')}}" class="btn btn-primary " tabindex="-1" role="button" aria-disabled="true">Ver Todos</a> #}
+      <br>
+      <!-- /.row -->
+      <!-- Features Section -->
+    </div>
+    <!-- /.container -->
+{% endblock %}
+
+{% block javascripts %}
+  {{parent()}}
+  <script>
+    $(document).ready(function(){
+      $("#recipeCarousel").carousel({
+          interval : 5000,
+          pause: false
+      });
+  });
+  </script>
+{% endblock %}

@@ -1,0 +1,32 @@
+easy_admin:
+    entities:
+        Contacto:
+            class: App\Entity\Contacto
+            label: 'Usuarios Registro o Contacto'
+            disabled_actions: ['new', 'edit', 'delete']
+            role: ROLE_ADMIN
+            list:
+                title: '%%entity_label%%'
+                fields:
+                    - { property: 'nombre' }
+                    - { property: 'apellido' }
+                    - { property: 'organizacion', label: 'ONG' }
+                    - { property: 'inscripcion', label: 'Inicio inscripción', type: 'boolean' }
+                    - { property: 'createdAt', label: 'Fecha', format: 'd/m/Y H\h' }
+                    - { property: 'registro', label: 'Registro finalizado', type: 'boolean' }
+                    - { property: 'updatedAt', label: 'Fecha', format: 'd/m/Y H\h' }
+            show:
+                title: '%%entity_label%% (#%%entity_id%%)'
+                fields:
+                    - { property: 'nombre', css_class: 'col-md-4' }
+                    - { property: 'apellido', css_class: 'col-md-4' }
+                    - { property: 'cuil', label: 'CUIT/CUIL', css_class: 'col-md-4' }
+                    - { property: 'organizacion', label: 'ONG', css_class: 'col-md-8' }
+                    - { property: 'cuitOng', label: 'CUIT', css_class: 'col-md-4' }
+                    - { property: 'inscripcion', label: 'Inicio inscripción', css_class: 'col-md-3' }
+                    - { property: 'createdAt', label: 'Fecha', format: 'd/m/Y H\h', css_class: 'col-md-3' }
+                    - { property: 'registro', label: 'Registro finalizado', css_class: 'col-md-3' }
+                    - { property: 'updatedAt', label: 'Fecha', format: 'd/m/Y H\h', css_class: 'col-md-3' }
+                    - { property: 'email', label: 'Correo', css_class: 'col-md-6' }
+                    - { property: 'telefono', label: 'Teléfono', css_class: 'col-md-6' }
+                    - { property: 'observaciones', css_class: 'col-md-12' }

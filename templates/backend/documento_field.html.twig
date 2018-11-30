@@ -1,0 +1,22 @@
+
+{% set colors = field_options.label_colors|default(['primary']) %}
+
+{% for documento in value %}
+	<div class="row">
+    	<div>
+    		<div class="col-md-12">
+    			<a  target="_blank" href="{{asset('uploads/documentos/'~documento.path)}}" alt="">
+				{% if documento.epigrafe %}
+					{{documento.epigrafe}}
+				{% else %}
+					{{documento.path}}
+				{% endif %}
+				
+				</a>
+    		</div>
+    	</div>
+	</div>
+	<br>
+    
+
+{% endfor %}

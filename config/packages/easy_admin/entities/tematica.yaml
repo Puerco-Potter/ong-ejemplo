@@ -1,0 +1,48 @@
+easy_admin:
+    entities:
+        Tematica:
+            class: App\Entity\Tematica
+            label: 'Tematicas'
+            role: ROLE_TEMATICA
+            # role_prefix: ROLE_PAGINA
+            # help: 'Global message displayed in all views'
+            list:
+                title: "Tématica"
+                actions:
+                    - { name: 'new', label: 'Crear Temática'}
+                fields:
+                    - id
+                    - { property: 'publicado', css_class: 'col-md-12'}
+                    - nombre
+                    - { property: 'imagen', type: 'image', base_path: '%path.imagenesTematicas%' }
+                    - orden
+            form:  # <-- 'form' is applied to both 'new' and 'edit' views
+                title: 'Crear temática'
+                fields: 
+                    - { type: 'group', css_class: 'col-md-12', label: 'Tématica' }
+                    - { property: 'publicado', css_class: 'col-md-12'}
+                    - { property: 'nombre', css_class: 'col-md-12'}
+                    - { property: 'noticias', css_class: 'col-md-12'}
+                    - { property: 'imageFile', type: 'vich_image' , label: 'Imagen Temática'}
+                    - { property: 'resumen', css_class: 'col-md-12', type: 'textarea' }
+                    - { property: 'imageFilePrincipal', type: 'vich_image' , label: 'Imagen Principal'}
+                    - { property: 'desarrollo',  type: 'textarea', css_class: 'ckeditor col-md-12'}
+                    - { property: 'resources' , label: "Galeria de imagenes" ,type: 'collection' ,type_options: { entry_type: 'App\Form\ResourceType', by_reference: false }}
+                    - { property: 'documentos' , label: "Documentos" ,type: 'collection' ,type_options: { entry_type: 'App\Form\DocumentoType', by_reference: false }}
+                    - orden
+            show:
+                fields:
+                    - id
+                    - { property: 'publicado', css_class: 'col-md-12'}
+                    - { property: 'nombre', label: 'Nombre' , css_class: 'col-md-12'}
+                    - { property: 'imagen', type: 'image', base_path: '%path.imagenesTematicas%', css_class: 'col-md-12' }
+                    - { property: 'resumen', css_class: 'col-md-12', type: 'textarea' }
+                    - { property: 'imagenPrincipal', type: 'image', base_path: '%path.imagenesTematicas%', css_class: 'col-md-12' }
+                    - { property: 'desarrollo', type: "text", css_class: 'col-md-12', template: 'backend\ck_editor.html.twig' }
+                    - { property: 'resources' ,label: 'Galeria', template: 'backend\resource_field.html.twig',css_class: 'col-md-12' }
+                    - { property: 'documentos' ,label: 'Documento', template: 'backend\documento_field.html.twig',css_class: 'col-md-12' }
+                    - orden
+            edit:
+                title: 'Editar Temática'
+
+                

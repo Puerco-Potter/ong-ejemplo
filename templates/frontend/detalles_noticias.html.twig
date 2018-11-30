@@ -1,0 +1,172 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %}{{noticia.titulo}}{% endblock %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div class="container">
+      <!-- Page Heading/Breadcrumbs -->
+    {% if noticia.publicado == 1 %}
+      <div style="background-color:#0075b8;color:white;">
+        <h4 class="mt-4 mb-3">
+          {% if noticia.tematicas %}
+            {% for tematica in noticia.tematicas %}
+              <a class="hashtag_tematica" href="{{path('noticias_tematica',{'tematica':tematica.id})}}">#{{tematica.nombre}}</a>&nbsp
+            {% endfor %}
+          {% endif %}
+        </h4> 
+      </div>
+      <div class="row">
+        <!-- Blog Entries Column -->  
+        <div class="col-md-8">
+            <div  style="text-align:right;"><strong>{{noticia.fechaCreacion|date('d/m/Y')}}</strong></div>
+          <!-- Blog Post -->
+          <div class="card mb-4">
+    
+                {% if noticia.mostrarVolanta %}
+                    {{noticia.volanta}}
+                {% endif %}
+                
+            <div class="card-body">
+              <h2 class="card-title">
+                {% if noticia.mostrarTitulo %}
+                    {{noticia.titulo}}
+                {% endif %}
+              </h2>
+              <div style="text-align:center;">
+                {% if noticia.imagen %}
+                    <img class="img-fluid" src="{{asset('uploads/noticias/'~noticia.imagen)}}" >
+                {% endif %}
+              </div>
+              <p class="card-text">
+                <div style="text-align:center;">
+                    <strong>
+                        {% if noticia.mostrarBajada %}
+                            {{noticia.bajada|raw}}
+                        {% endif %}
+                    </strong>
+                </div>
+                {{noticia.desarrollo|raw}}
+                <br>
+                 {% if noticia.resources|length > 0 %}
+                    <h4>Galería de imagenes<h4>
+                    <div style="text-align:center;">
+                      <div class="galleria" >
+                        {% for resource in  noticia.resources %}
+                          <img  src="{{asset('uploads/resources/'~resource.path)}}" data-title="resource.epigrafe" data-description="resource.epigrafe">
+                        {% endfor %}
+                      </div>
+                    </div>
+                {% endif %}
+
+                {% if noticia.documentos|length > 0 %}
+                    <h4>Documentos anexos<h4>
+                    <div style="text-align:left;">
+                        {% for documento in  noticia.documentos %}
+                        
+                            <div style="text-decoration:none;padding-left:10px;">
+                                <h6>
+                                    <a  target="_blank" href="{{asset('uploads/documentos/'~documento.path)}}">
+                                        {% if documento.epigrafe %}
+                                             {{documento.epigrafe}}
+                                        {% else %}
+                                             {{documento.path}}
+                                        {% endif %}
+                                       
+                                    </a>
+                                </h6>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if noticia.ong %}
+                  <h4>ONG que publico la noticia:</h4>
+                  <div>
+                    {{noticia.ong.nombreOrganizacion}}
+                  </div>
+                  <h4>Usuario que creo la noticia:</h4>
+                  <div>
+                    {{noticia.user}}
+                  </div>
+                {% endif %}
+                
+                
+               
+
+            </div>  
+          </div>
+        </div>
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+          <h4 class="panel-title">
+						Noticias Relacionadas
+					</h4>
+          {% for noticia_rel in ultimas_noticias %}
+            <div class="card my-4">
+                <a href="{{path('detalle_noticia',{'id':noticia_rel.id})}}" class="links_articulos">
+                    {% if noticia_rel.imagen %}
+                        <img class="img-fluid" src="{{asset('uploads/noticias/'~noticia_rel.imagen)}}" >
+                    {% endif %}
+                    <div class="card-body">
+                        {{noticia_rel.titulo|raw}}
+                    </div>
+                <a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <!-- /.row -->
+      {% if not ultimas_noticias is empty %}
+        <h4 class="panel-title">
+					Programas Relacionados
+				</h4>
+        <br>
+      {% endif %}
+      {% if not ultimos_programas is empty %}
+        <div class="row">
+            {% for programa in ultimos_programas %}
+              <div class="col-lg-4 col-sm-6 portfolio-item">
+              <div class="card h-100">
+                <a href="{{path('detalles_programas',{'id':programa.id})}}" class="hvr-shrink links_articulos">
+                  <img class="card-img-top" src="{{asset('uploads/programas/'~programa.imagen)}}" alt="">
+                  <div class="card-body">
+                    <h6 class="card-title">
+                    {{programa.titulo}}
+                    </h6>
+                    <p class="card-text">  
+                      <p>{{ (programa.resumen|length > 100 ? programa.resumen|slice(0, 100) ~ '...' : programa.resumen )|raw }}</p>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+      {% else %}
+          <h6>Sin Programas Relacionados</h6><br>
+      {% endif %}
+    {% endif %}
+    </div>
+  {% endblock %}
+
+   {% block javascripts %}
+        {{parent()}}
+        
+        <link type="text/css" rel="stylesheet" href="{{ asset('galleria/themes/classic/galleria.classic.css')}}">
+        <script src="{{ asset('galleria/galleria-1.5.7.min.js') }}"></script>
+        <script src="{{ asset('galleria/themes/classic/galleria.classic.min.js') }}"></script>
+        <script>
+            if($('.galleria')[0]){
+              $('.galleria').galleria({
+                width: 700,
+                height: 467 //--I made heights match
+              });
+                Galleria.run('.galleria', {
+                    height: 300,
+                    wait: true
+              });
+            }
+            
+        </script>
+    {% endblock %}
+    

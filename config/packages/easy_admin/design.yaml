@@ -1,0 +1,24 @@
+easy_admin:
+    design:
+        form_theme: 'vertical'
+        templates:
+            show: '@EasyAdminExtension/default/show_vertical.html.twig'
+        brand_color: '#0075b8'
+        assets:
+            favicon: '/img/favicon.png'
+            js:
+                - 'build/js/easy_admin.js'
+        menu:
+            - { label: 'Noticias', entity: 'Noticia', default: true }
+            - { Label: 'Agenda', entity: 'Agenda' }
+            - { Label: 'Programa', entity: 'Programa' }
+            - { label: 'Temáticas', entity: 'Tematica' }
+            - { label: 'SubTematica', entity: 'SubTematica' }
+            - { label: 'Debate', entity: 'Debate' }
+            - { Label: 'Banners', entity: 'Banner' }
+            - { Label: 'Ongs y Jurisdicciones', entity: 'Ong' }
+            - { label: 'Usuarios', entity: 'User', icon: 'users' }
+            - { Label: 'Usuarios Registro o Contacto', entity: 'Contacto' }
+            - { Label: 'Localidades', entity: 'Localidad' }
+            - { Label: 'Ong Tipos de Aporte', entity: 'OngTipoAporte' }
+            - { Label: 'Contenidos', entity: 'Contenido' }

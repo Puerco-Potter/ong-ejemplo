@@ -1,0 +1,18 @@
+
+{% set colors = field_options.label_colors|default(['primary']) %}
+
+{% for resource in value %}
+	<div class="row">
+		<div class="col-md-3">
+    	   Epígrafo: {{resource.epigrafe}}
+    	</div>
+    	<div>
+    		<div class="col-md-4">
+    			<img class="img-responsive" src="{{asset('uploads/resources/'~resource.path)}}" alt="">
+    		</div>
+    	</div>
+	</div>
+	<br>
+    
+
+{% endfor %}

@@ -1,0 +1,36 @@
+easy_admin:
+    entities:
+        SubTematica:
+            class: App\Entity\SubTematica
+            label: 'SubTematicas'
+            role: ROLE_SUBTEMATICA
+            # role_prefix: ROLE_PAGINA
+            # help: 'Global message displayed in all views'
+            list:
+                title: "SubTemática"
+                actions:
+                    - { name: 'new', label: 'Crear SubTemática'}
+                fields:
+                    - id
+                    - publicado
+                    - nombre
+                    - tematica
+                    - orden
+        
+            form:  # <-- 'form' is applied to both 'new' and 'edit' views
+                title: 'Crear subtemática'
+                fields: 
+                    - { type: 'group', css_class: 'col-md-12', label: 'SubTemática' }
+                    - { property: 'publicado', css_class: 'col-md-12'}
+                    - { property: 'nombre', css_class: 'col-md-12'}
+                    - { property: 'tematica',label: 'Temática',  css_class: 'col-md-12'}
+                    - { property: 'orden',label: 'Orden',  css_class: 'col-md-12'}
+            show:
+                fields:
+                    - id
+                    - { property: 'publicado', css_class: 'col-md-12'}
+                    - { property: 'nombre', label: 'Nombre' , css_class: 'col-md-12'}
+                    - { property: 'tematica',label: 'Temática',  css_class: 'col-md-12'}
+                    - { property: 'orden',label: 'Orden',  css_class: 'col-md-12'}
+            edit:
+                title: 'Editar SubTemática'

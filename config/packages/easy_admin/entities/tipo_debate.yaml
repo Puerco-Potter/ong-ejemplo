@@ -1,0 +1,42 @@
+easy_admin:
+    entities:
+        Debate:
+            class: App\Entity\Debate
+            label: 'Debates'
+            controller: App\Controller\DebateController
+            role: ROLE_USER
+            # role_prefix: ROLE_PAGINA
+            # help: 'Global message displayed in all views'
+            list:
+                title: "Debates"
+                actions:
+                    - { name: 'new', label: 'Abrir nuevo debate'}
+                    - { name: 'mostrar_debate', label: 'Ver Debate' , type: 'route',icon: 'comments'}  
+                    - { name: 'edit', icon: 'pencil', label: 'Editar' }
+                    - { name: 'delete', icon: 'ban', label: 'Eliminar'}
+                fields:
+                    - id
+                    - titulo
+                    - tematicas
+                    - fechaCreacion
+                    # - fechaFinalizacion
+                    - user
+                    - ong
+        
+            form:  # <-- 'form' is applied to both 'new' and 'edit' views
+                title: 'Crear nuevo debate'
+                fields: 
+                    - { type: 'group', css_class: 'col-md-12', label: 'Debate' }
+                    - { property: 'titulo', css_class: 'col-12'}
+                    - { property: 'tematicas',label: 'Temáticas',  css_class: 'col-12'}
+                    - { property: 'descripcion',label: 'Descripción', type: 'textarea', css_class: 'col-12 ckeditor'}
+            show:
+                fields:
+                    - id
+                    - { property: 'titulo', label: 'titulo' , css_class: 'col-md-12'}
+                    - { property: 'tematicas',label: 'Temáticas',  css_class: 'col-md-12'}
+                    - { property: 'descripcion',label: 'Descripción',  css_class: 'col-12 ckeditor'}
+                    - { property: 'fechaCreacion', label: 'Fecha Creación' , css_class: 'col-12'}
+
+            edit:
+                title: 'Editar Debate'

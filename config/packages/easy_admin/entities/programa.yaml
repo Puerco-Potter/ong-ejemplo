@@ -1,0 +1,64 @@
+easy_admin:
+    entities:
+        Programa:
+            class: App\Entity\Programa
+            controller: App\Controller\ProgramaController
+            label: 'Programa'
+            role: ROLE_JURISDICCION
+            list:
+                title: "Programa"
+                fields:
+                    - id
+                    - { property: 'publicado', label: 'Publicado', type: 'boolean' }
+                    - { property: 'tematicas', label: 'Temáticas', css_class: 'col-md-12', type: "array" }
+                    - { property: 'titulo', label: 'Título', type: 'text' }
+                    - { property: 'imagen', type: 'image', base_path: '%path.imagenesProgramas%' }
+                    - { property: 'fechaCreacion', label: 'Creación', type: 'date' }
+                    - { property: 'fechaModificacion', label: 'Modificación', type: 'date' }
+                    - { property: 'ong', label: 'ONG', type: "text" }
+                    - { property: 'comentarios' }
+                    - { property: 'user', label: "usuario" }
+            form:  # <-- 'form' is applied to both 'new' and 'edit' views
+                title: 'Crear  Programa'
+                fields: 
+                    - { type: 'group', css_class: 'col-md-12', label: 'Programa' }
+                    - { property: 'titulo', label: 'Título', css_class: 'col-md-9' }
+                    - { property: 'publicado', css_class: 'col-md-3', role: ROLE_SUPER_ADMIN }
+                    - { type: 'divider' }
+                    - { property: resumen, label: 'Resumen', css_class: 'col-md-12', type: textarea }
+                    - { type: 'divider' }
+                    - { type: 'group', css_class: 'col-md-12', label: "Contenido del Programa" }
+                    - { property: 'desarrollo',  type: 'FOS\CKEditorBundle\Form\Type\CKEditorType', css_class: 'ckeditor col-md-12' }
+                    - { property: 'imageFile', type: 'vich_image', label: 'Imagen Principal' }
+                    - { type: 'group', css_class: 'col-md-12', label: "Galeria" }
+                    - { property: 'resources', label: "Galeria de imagenes" ,type: 'collection',type_options: { entry_type: 'App\Form\ResourceType', by_reference: false }}
+                    - { property: 'documentos', label: "Documentos" ,type: 'collection',type_options: { entry_type: 'App\Form\DocumentoType', by_reference: false }}
+                    - { property: 'tematicas', label: 'Temáticas' }
+                    - { type: 'group', css_class: 'col-md-12', label: 'Datos de Contacto' }
+                    - { property: 'telefono', label: 'Teléfono' }
+                    - { property: 'mail', label: 'Mail' }
+                    - { property: 'pagina', label: 'Link de pagina' }
+                    - { property: 'pagina_nombre', label: 'Nombre de la pagina' }
+                    - { property: 'comentarios', role: ROLE_SUPER_ADMIN, type: 'collection', type_options: { entry_type: 'App\Form\NoticiaComentarioType', by_reference: false }, css_class: 'col-md-12'}
+
+            show:
+                fields:
+                    - id
+                    - { property: 'titulo', label: 'Título', css_class: 'col-md-9' }
+                    - { property: 'publicado' , label: 'Publicado', css_class: 'col-md-3' }
+                    - { property: 'resumen', label: 'Resumen', css_class: 'col-md-12', template: 'backend\ck_editor.html.twig' }
+                    - { property: 'desarrollo', type: "text", css_class: 'col-md-12', template: 'backend\ck_editor.html.twig' }
+                    - { property: 'imagen', type: 'image', base_path: '%path.imagenesProgramas%', css_class: 'col-md-12' }
+                    - { property: 'fechaCreacion', label: 'Creación', type: 'date', css_class: 'col-md-12' }
+                    - { property: 'fechaModificacion', label: 'Modificación', type: 'date', css_class: 'col-md-12' }
+                    - { property: 'resources',label: 'Galeria', template: 'backend\resource_field.html.twig',css_class: 'col-md-12' }
+                    - { property: 'tematicas', label: 'Temáticas' }
+                    - { property: 'telefono', label: 'Teléfono' }
+                    - { property: 'mail', label: 'Mail' }
+                    - { property: 'pagina', label: 'Link de pagina' }
+                    - { property: 'paginaNombre', label: 'Nombre de la pagina' }
+                    - { property: 'comentarios', css_class: 'col-md-12' }
+                    - { property: 'user', label: "usuario" }
+
+            edit:
+                title: 'Editar Programa'

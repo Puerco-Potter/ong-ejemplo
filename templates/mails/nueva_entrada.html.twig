@@ -1,0 +1,61 @@
+<link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<div class="row">
+    <div>
+        <h5>Estimado Usuario.</h5> 
+        <p>
+            Informamos que se ha publicado 
+            {% if tipo == 1 %}
+                la siguiente Noticia
+            {% elseif tipo == 2 %}
+                el siguiente Programa
+            {% elseif  tipo == 3 %}
+                un nuevo evento en la Agenda
+            {% endif %}
+            <br>
+            <br>
+            <strong>Titulo: </strong>{{entrada.titulo}}
+            <br> 
+            {% if entrada.user %}
+               <strong>Usuario: </strong> {{entrada.user.username}}
+            {% else %}
+                <strong>Usuario: </strong> Administrador de ONG
+            {% endif %}
+            
+            
+            <br>
+            Link:
+            {% if tipo == 1 %}
+                    <a href="{{url('detalle_noticia',{'id':entrada.id})}}" target="_blank">{{url('detalle_noticia',{'id':entrada.id})}}</a>
+            {% elseif tipo == 2 %}
+                    <a href="{{url('detalles_programas',{'id':entrada.id})}}" target="_blank">{{url('detalles_programas',{'id':entrada.id})}}</a>
+            {% elseif tipo == 3 %}
+                    Fecha: {{entrada.fecha|date('d/m/Y')}}
+                    <br>
+                    <a href="{{url('agenda')}}">{{url('agenda')}}</a>
+            {% endif %}
+            
+        </p>
+        <br>
+        Ante cualquier consulta o duda comuniquese a 
+            {% if soporte_mail.contenido is defined%}
+                {{soporte_mail.contenido}}
+            {% else %}
+                 {{soporte_mail}}
+            {% endif %} y telefónicamente al 
+            {% if soporte_tel.contenido is defined%}
+                {{soporte_tel.contenido}}
+            {% else %}
+                 {{soporte_tel}}
+            {% endif %}
+        <br>
+        <div style="text-align:center;width:20%;">
+            Atte. <br>
+            Equipo de administración ONG<br>
+        </div>
+        <div style="width:50%;">
+            <img  class="img-fluid" src="{{url('index')}}img/logos_head.png">
+        </div>
+    </div>
+</div>

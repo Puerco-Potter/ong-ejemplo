@@ -1,0 +1,6 @@
+easy_admin:
+    entities:
+        Localidad:
+            class: App\Entity\Localidad
+            label: 'Localidades'
+            role: ROLE_ADMIN

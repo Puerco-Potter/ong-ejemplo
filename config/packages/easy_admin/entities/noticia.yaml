@@ -1,0 +1,66 @@
+easy_admin:
+    entities:
+        Noticia:
+            class: App\Entity\Noticia
+            controller: App\Controller\NoticiaController
+            label: 'Noticia'
+            role: ROLE_USER
+            list:
+                title: 'Noticia'
+                fields:
+                    - id
+                    - { property: 'publicado', label: 'Publicado', type: 'boolean' }
+                    - { property: 'tematicas', label: 'Temáticas', type: 'array', css_class: 'col-md-12' }
+                    - { property: 'titulo', label: 'Título', type: 'text', css_class: 'col-md-12' }
+                    - { property: 'imagen', type: 'image', base_path: '%path.imagenesNoticias%' }
+                    - { property: 'fechaCreacion', label: 'Creación', type: 'date' }
+                    - { property: 'fechaModificacion', label: 'Modificación', type: 'date' }
+                    - { property: 'comentarios' }
+                    - { property: 'user', label: "usuario" }
+            form:
+                title: 'Crear una Noticia'
+                fields:
+                    - { type: 'group', css_class: 'col-md-12', label: 'Encabezado' }
+                    - { property: 'titulo', label: 'Título', css_class: 'col-md-6' }
+                    - { property: 'mostrarTitulo', label: 'Mostrar Título', css_class: 'col-md-3'}
+                    - { property: 'publicado', css_class: 'col-md-3', role: ROLE_SUPER_ADMIN }
+                    - { type: 'divider' }
+                    - { property: 'bajada', label: 'Bajada', css_class: 'col-md-6',type: textarea}
+                    - { property: 'mostrarBajada', label: 'Mostrar Bajada', css_class: 'col-md-6'}
+                    - { type: 'divider' }
+                    - { type: 'group', css_class: 'col-md-12', label: 'Contenido de la noticia' }
+                    - { property: 'desarrollo',  type: 'FOS\CKEditorBundle\Form\Type\CKEditorType', css_class: 'ckeditor col-md-12'}
+                    - { property: 'imageFile', type: 'vich_image', label: 'Imagen Principal'}
+                    - { type: 'group', css_class: 'col-md-12', label: 'Galeria' }
+                    - { property: 'resources', label: 'Galeria de imagenes', type: 'collection', type_options: { entry_type: 'App\Form\ResourceType', by_reference: false }, css_class: 'col-md-12'}
+                    - { property: 'documentos', label: 'Documentos', type: 'collection', type_options: { entry_type: 'App\Form\DocumentoType', by_reference: false }, css_class: 'col-md-12'}
+                    - { property: 'tematicas', label: 'Temáticas', css_class: 'col-md-12'}
+                    - { type: 'group', label: 'Comentarios', css_class: 'col-md-12' }
+                    - { property: 'comentarios', role: ROLE_SUPER_ADMIN, type: 'collection', type_options: { entry_type: 'App\Form\NoticiaComentarioType', by_reference: false }, css_class: 'col-md-12'}
+            show:
+                fields:
+                    - id
+                    - { property: 'titulo', label: 'Título', css_class: 'col-md-6' }
+                    - { property: 'mostrarTitulo', label: 'Mostrar Título', type: 'toggle', css_class: 'col-md-3' }
+                    - { property: 'publicado', label: 'Publicado', css_class: 'col-md-3' }
+                    #- { property: 'volanta', label: 'Volanta', css_class: 'col-md-6' }
+                    - { property: 'mostrarVolanta', label: 'Mostrar Volanta', type: 'toggle',  css_class: 'col-md-6' }
+                    - { property: 'bajada', label: 'Bajada', css_class: 'col-md-6', template: 'backend\ck_editor.html.twig' }
+                    - { property: 'mostrarBajada', label: 'Mostrar Bajada', type: 'toggle',  css_class: 'col-md-6' }
+                    - { property: 'desarrollo', type: 'text', css_class: 'col-md-12', template: 'backend\ck_editor.html.twig' }
+                    - { property: 'imagen', type: 'image', base_path: '%path.imagenesNoticias%', css_class: 'col-md-12' }
+                    - { property: 'fechaCreacion', label: 'Creación', type: 'date', css_class: 'col-md-6' }
+                    - { property: 'fechaModificacion', label: 'Modificación', type: 'date', css_class: 'col-md-6' }
+                    - { property: 'resources', label: 'Galeria', template: 'backend\resource_field.html.twig', css_class: 'col-md-12' }
+                    - { property: 'documentos', label: 'Documento', template: 'backend\documento_field.html.twig', css_class: 'col-md-12' }
+                    - { property: 'tematicas', label: 'Temáticas', css_class: 'col-md-12' }
+                    - { property: 'comentarios', css_class: 'col-md-12' }
+                    - { property: 'user', label: "usuario" }
+            edit:
+                title: 'Editar Noticia'
+            new:
+                fields:
+                    - { property: 'mostrarBajada', label: 'Mostrar Bajada', css_class: 'col-md-6', type_options: {data: true} }
+                    - { property: 'mostrarTitulo', label: 'Mostrar Título', css_class: 'col-md-3', type_options: {data: true} }
+            search:
+                fields: [tematicas.nombre, titulo]

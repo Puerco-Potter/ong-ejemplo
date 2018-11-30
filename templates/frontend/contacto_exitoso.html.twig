@@ -1,0 +1,42 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %}Género{% endblock %}
+{% block stylesheets %}
+  {{parent()}}
+  <style>
+    .google-maps {
+        position: relative;
+        padding-bottom: 75%; // This is the aspect ratio
+        height: 0;
+        overflow: hidden;
+        margin-top:15px;
+    }
+    .google-maps iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    }
+  </style>
+{% endblock %}
+{% block body %}
+
+    <!-- Page Content -->
+    <div class="container" style="min-height:400px;">
+        <h3 class="mt-4 mb-3">
+            Contacto
+        </h3> 
+        <div class="card" >
+            <div class="card-body" style="text-align:center;">
+                <h4 class="card-title">El mensaje fue enviado correctamente.</h4>
+                <p class="card-text">A la brevedad estaremos en contacto con ud.</p>
+                <a href="{{path('index')}}" class="btn btn-primary">Volver al inicio</a>
+            </div>
+        </div>
+      <br>
+    </div>
+  {% endblock %}
+    

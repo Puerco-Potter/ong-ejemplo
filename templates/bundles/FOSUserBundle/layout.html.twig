@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|split('_')|first|default('es') }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        {# Favicon #}
+        <link rel="icon" href="{{asset('img/favicon.png')}}">        
+        <title>ONG</title>
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('build/js/login.css') }}">
+            <style>
+                body {
+                    background-image: url('{{ asset("img/slider1.jpg") }}');
+                    background-repeat: no-repeat;
+                    background-size: auto;
+                    opacity: 0.90;
+                    filter: alpha(opacity=90);
+                }
+            </style>
+        {% endblock %}
+    </head>
+    <body>
+        {# <div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div> #}
+
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }}">
+                        {{ message|trans({}, 'MWSimpleAdminCrudBundle') }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        <div class="container">
+            <div id="loginbox" style="margin-top:50px;" class="row">
+                <div class="card col-12">
+                    <div style="padding-top:30px" class="card-body">
+                        <div class="row">
+                            {% block fos_user_content %}
+                            {% endblock fos_user_content %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% block javascripts %}
+            <script src="{{ asset('build/js/login.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,122 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .google-maps {
+            position: relative;
+            padding-bottom: 75%; // This is the aspect ratio
+            height: 0;
+            overflow: hidden;
+            margin-top:15px;
+        }
+        .google-maps iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <!-- Page Content -->
+    <div class="container" style="min-height:400px;">
+        <h3 class="mt-4 mb-3">
+            Contacto
+        </h3> 
+        <div class="card" >
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form_label(form.nombre) }}
+                                {{ form_errors(form.nombre) }}
+                                {{ form_widget(form.nombre) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_label(form.apellido) }}
+                                {{ form_errors(form.apellido) }}
+                                {{ form_widget(form.apellido) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{ form_label(form.cuil) }}
+                                {{ form_errors(form.cuil) }}
+                                {{ form_widget(form.cuil) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form_label(form.email) }}
+                                {{ form_errors(form.email) }}
+                                {{ form_widget(form.email) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_label(form.telefono) }}
+                                {{ form_errors(form.telefono) }}
+                                {{ form_widget(form.telefono) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                {{ form_label(form.organizacion) }}
+                                {{ form_errors(form.organizacion) }}
+                                {{ form_widget(form.organizacion) }}
+                            </div>
+                            <div class="col-md-4">
+                                {{ form_label(form.cuitOng) }}
+                                {{ form_errors(form.cuitOng) }}
+                                {{ form_widget(form.cuitOng) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{ form_label(form.observaciones) }}
+                                {{ form_errors(form.observaciones) }}
+                                {{ form_widget(form.observaciones) }}
+                            </div>
+                        </div>
+                        <br>
+                        <div style="text-align:center;">
+                            {{ form_widget(form.enviar) }}
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                    <div class="col-md-6">
+                        <h4><strong>Datos de contacto: </strong></h4>
+                        <hr>
+                        {% if soporte_tel %}
+                            <strong>Teléfono: </strong>{{soporte_tel.texto}}
+                        <br>
+                        {% endif %}
+                        {% if soporte_cel %}
+                        <strong>Celular: </strong>{{soporte_cel.texto}}
+                        <br>
+                        {% endif %}
+                        {% if soporte_mail %}
+                        <strong>Email de contacto: </strong>{{soporte_mail.texto}}
+                        <br>
+                        {% endif %}
+                        {% if domicilio %}
+                        <strong>Dirección: </strong>{{domicilio.texto}}
+                        <br>
+                        {% set busqueda = domicilio.texto %}
+                        {% set busqueda = busqueda|replace({ ' ': "+" }) %}
+                        <div class="google-maps" >
+                            <iframe width="600" height="450" frameborder="0" style="border:0"
+                            src="https://www.google.com/maps/embed/v1/search?q={{busqueda}},+Resistencia,+Chaco,+Argentina&key=..." allowfullscreen></iframe>  
+                        </div>
+                        {% endif %}
+                    <div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+{% endblock %}

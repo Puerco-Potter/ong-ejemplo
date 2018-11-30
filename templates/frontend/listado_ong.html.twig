@@ -1,0 +1,166 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %}Género{% endblock %}
+{% block stylesheets %}
+  {{parent()}}
+  <style>
+    .tematica_item  {
+      background-color:#black;
+      color:black;
+      height:50px;
+      text-decoration:none;
+      text-align:left;
+    }
+    .tematica_item:hover{
+      background-color:#1879be;
+      color:white;
+      text-decoration:none;
+
+    }
+    .scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+  </style>
+{% endblock %}
+{% block body %}
+<div class="container" style="min-height:400px;">
+      <h3 class="mt-4 mb-3">
+       Lista de ONGs
+      </h3> 
+
+    <div class="row" style="margin-bottom:100px;">
+        <div class="col-5">
+            <div class="panel-heading">
+				<h6 class="panel-title">
+					Localidades
+				</h6>
+			</div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" style="min-width:150px;background-color:#0075b8;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% if localidad_seleccionada %}
+                        {% for key,localidad in lista_localidades %}
+                            {% if localidad==localidad_seleccionada %}
+                                {{key}}
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        Todas
+                    {% endif %} 
+                </button>
+                <div class="dropdown-menu scrollable-menu">
+                    {% for key,localidad in lista_localidades %}
+                        {% if localidad_seleccionada %}
+                            {% if localidad_seleccionada != localidad %}
+                                {% if tematica_seleccionada %}
+                                    <a href="{{path('listado_ong',{'tematica':tematica_seleccionada.id,'localidad_seleccionada':localidad})}}" class="dropdown-item" >{{key}}</a>
+                                    {% else %}
+                                    <a href="{{path('listado_ong',{'tematica':0,'localidad_seleccionada':localidad})}}" class="dropdown-item" >{{key}}</a>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if tematica_seleccionada %}
+                                <a href="{{path('listado_ong',{'tematica':tematica_seleccionada.id,'localidad_seleccionada':localidad})}}" class="dropdown-item" >{{key}}</a>
+                            {% else %}
+                                <a href="{{path('listado_ong',{'tematica':0,'localidad_seleccionada':localidad})}}" class="dropdown-item" >{{key}}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="panel-heading">
+				<h6 class="panel-title">
+					Temáticas
+				</h6>
+			</div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-sm  dropdown-toggle" style="min-width:150px;background-color:#0075b8;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% if tematica_seleccionada %}
+                        {{tematica_seleccionada.nombre}}
+                    {% else %}
+                        Todas
+                    {% endif %}
+                </button>
+                <div class="dropdown-menu scrollable-menu">
+                    {% if tematica_seleccionada %}
+                        <a  href="{{path('listado_ong')}}" class="dropdown-item">Todas</a>
+                    {% endif %}
+                    {% for tematica in tematicas %}
+                        {% if tematica_seleccionada %}
+                            {% if  tematica_seleccionada.id != tematica.id %}
+                                {% if localidad_seleccionada %}
+                                    <a  href="{{path('listado_ong',{'tematica':tematica.id,'localidad_seleccionada':localidad_seleccionada})}}" class="dropdown-item">{{tematica.nombre}}</a>
+                                {% else %}
+                                    <a  href="{{path('listado_ong',{'tematica':tematica.id})}}" class="dropdown-item">{{tematica.nombre}}</a>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if localidad_seleccionada %}
+                                <a  href="{{path('listado_ong',{'tematica':tematica.id,'localidad_seleccionada':localidad_seleccionada})}}" class="dropdown-item">{{tematica.nombre}}</a>
+                            {% else %}
+                                <a  href="{{path('listado_ong',{'tematica':tematica.id})}}" class="dropdown-item">{{tematica.nombre}}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    <div>
+    <div class="row" style="margin-top:20px;">
+        <!-- Blog Entries Column -->
+        <div class="col-md-12">
+            
+            {% if not paginado_ong.currentPageResults is empty%}
+                <table class="table table-responsive table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">NOMBRE</th>
+                            <th scope="col">DIRECCIÓN</th>
+                            <th scope="col">LOCALIDAD</th>
+                            <th scope="col">TEMÁTICAS</th>
+                            <th scope="col">TELÉFONO</th>
+                            <th scope="col">EMAIL</th>
+                            <th scope="col">CONDICIÓN</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for ong in paginado_ong.currentPageResults %}
+                        <tr>
+                            <td>{{ong.nombreOrganizacion}}</td>
+                            <td>{{ong.direccion}}</td>
+                            <td>{{ong.localidadesString}}</td>
+                            <td class="col-2">
+                                {% for tematica in ong.tematicas %}
+                                    {{tematica.nombre}}
+                                    {% if loop.index < ong.tematicas|length  %}
+                                        , 
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>{{ong.telefono}}</td>
+                            <td>{{ong.user.username}}</td>
+                            <td>{% if ong.matricula is null %}
+                                No Matriculada
+                                {% else %}
+                                Matriculada
+                                {% endif %}</td>
+                            <td><a class="btn btn-primary" href="{{path('detalle_ong',{'id':ong.id})}}">Ver ficha</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <br>
+                {{ pagerfanta(paginado_ong, 'twitter_bootstrap4_translated',{ 'omitFirstPage': true , 'proximity': 2, 'prev_message' : 'Anterior', 'next_message': 'Siguiente' }) }}
+            {% endif %}      
+        </div>
+    </div>
+</div>
+</div>
+</div>
+    <br>
+  {% endblock %}
+    

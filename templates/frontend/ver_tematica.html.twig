@@ -1,0 +1,184 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %}{{tematica.nombre}}{% endblock %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div class="container" style="min-height:400px;">
+      <!-- Page Heading/Breadcrumbs -->
+      <h3 class="mt-4 mb-3">
+        {% if tematica.nombre %}
+          {{tematica.nombre}}
+        {% endif %}
+      </h3> 
+      <div class="row">
+        <!-- Blog Entries Column -->  
+        <div class="col-md-8">
+          <!-- Blog Post -->
+          <div class="card mb-4">
+            <div class="card-body">
+              {# <h2 class="card-title">
+                    {{tematica.nombre}}
+              </h2> #}
+              <div style="text-align:center;">
+                {% if tematica.imagenPrincipal %}
+                    <img class="img-fluid" src="{{asset('uploads/tematicas/'~tematica.imagenPrincipal)}}" >
+                {% endif %}
+              </div>
+              <p class="card-text">
+                <div style="text-align:center;">
+                    <strong>
+                        {% if tematica.resumen %}
+                            {{tematica.resumen|raw}}
+                        {% endif %}
+                    </strong>
+                </div>
+                {{tematica.desarrollo|raw}}
+                <br>
+                 {% if tematica.resources|length > 0 %}
+                    <h4>Galería de imagenes<h4>
+                    <div style="text-align:center;">
+                      <div class="galleria" >
+                        {% for resource in  tematica.resources %}
+                          <img  src="{{asset('uploads/resources/'~resource.path)}}" data-title="resource.epigrafe" data-description="resource.epigrafe">
+                        {% endfor %}
+                      </div>
+                    </div>
+                {% endif %}
+
+                {% if tematica.documentos|length > 0 %}
+                    <h4>Documentos anexos<h4>
+                    <div style="text-align:left;">
+                        {% for documento in  tematica.documentos %}
+                        
+                            <div style="text-decoration:none;padding-left:10px;">
+                                <h6>
+                                    <a  target="_blank" href="{{asset('uploads/documentos/'~documento.path)}}">
+                                        {% if documento.epigrafe %}
+                                             {{documento.epigrafe}}
+                                        {% else %}
+                                             {{documento.path}}
+                                        {% endif %}
+                                       
+                                    </a>
+                                </h6>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if tematica.ongs %}
+                    <table class="table table-responsive table-striped">
+                        <thead class="thead-dark">
+                            <div class="container"><h6>ONGs QUE TRABAJAN CON {{tematica.nombre|upper}}</h6></div>
+                            <tr>
+                                
+                            <th scope="col">NOMBRE</th>
+                            <th scope="col">DIRECCIÓN</th>
+                            <th scope="col">CIUDAD</th>
+                            <th scope="col">TELÉFONO</th>
+                            <th scope="col">CELULAR</th>
+                            <th scope="col">EMAIL</th>
+                            <th scope="col">CONDICIÓN</th>
+                            <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for ong in tematica.ongs %}
+                          {% if not ong.esJurisdiccion==1 %}
+                            {% if ong.publicado %}
+                              <tr>
+                                  <td>{{ong.nombreOrganizacion}}</td>
+                                  <td>{{ong.direccion}}</td>
+                                  <td>{{ong.localidadesString}}</td>
+                                  <td>{{ong.telefono}}</td>
+                                  <td>{{ong.celular}}</td>
+                                  <td>{{ong.user.username}}</td>
+                                  <td>{% if ong.matricula is null %}
+                                    No Matriculada
+                                    {% else %}
+                                    Matriculada
+                                    {% endif %}</td>
+                                  <td><a class="btn btn-primary" href="{{path('detalle_ong',{'id':ong.id})}}">Ver ficha</a></td>
+                              </tr>
+                            {% endif %}
+                          {% endif %}
+                            
+                        {% endfor %}
+                        </tbody>
+                     </table>
+                {% endif %}
+                
+                
+               
+
+               
+
+            </div>  
+          </div>
+        </div>
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+          <h4>Programas Relacionadas</h4>
+          {% for programa in programas_relacionados %}
+            <div class="card my-4">
+                <a href="{{path('detalles_programas',{'id':programa.id})}}" class="links_articulos">
+                    {% if programa.imagen %}
+                        <img class="img-fluid" src="{{asset('uploads/programas/'~programa.imagen)}}" >
+                    {% endif %}
+                    <div class="card-body">
+                        {{programa.titulo|raw}}
+                    </div>
+                <a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <!-- /.row -->
+      <h3 class="mt-4 mb-3">
+        {% if noticias_relacionadas %}
+          Noticias de {{tematica.nombre}}
+        {% endif %}
+      </h3> 
+      <div class="row">
+        {% for noticia in noticias_relacionadas %}
+          <div class="col-lg-4 col-sm-6 portfolio-item">
+          <div class="card h-100">
+            <a href="{{path('detalle_noticia',{'id':noticia.id})}}" class="links_articulos">
+              <img class="card-img-top" src="{{asset('uploads/noticias/'~noticia.imagen)}}" alt="">
+              <div class="card-body">
+                <h6 class="card-title">
+                 {{noticia.titulo}}
+                </h6>
+                <p class="card-text">  
+                  <p>{{ (noticia.bajada|length > 100 ? noticia.bajada|slice(0, 100) ~ '...' : noticia.bajada )}}</p>
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endblock %}
+
+   {% block javascripts %}
+        {{parent()}}
+        
+        <link type="text/css" rel="stylesheet" href="{{ asset('galleria/themes/classic/galleria.classic.css')}}">
+        <script src="{{ asset('galleria/galleria-1.5.7.min.js') }}"></script>
+        <script src="{{ asset('galleria/themes/classic/galleria.classic.min.js') }}"></script>
+        <script>
+            if($('.galleria')[0]){
+              $('.galleria').galleria({
+                width: 700,
+                height: 467 //--I made heights match
+              });
+                Galleria.run('.galleria', {
+                    height: 300,
+                    wait: true
+              });
+            }
+            
+        </script>
+    {% endblock %}
+    

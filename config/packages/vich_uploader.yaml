@@ -1,0 +1,75 @@
+vich_uploader:
+    db_driver: orm
+    mappings:
+        noticias_images:
+            uri_prefix:        '%path.imagenesNoticias%'
+            upload_destination: '%kernel.root_dir%/../public/uploads/noticias'
+            namer:
+                service: vich_uploader.namer_uniqid
+                #options: { property: 'slug'} # supposing that the object contains a "slug" attribute or a "getSlug" method
+            inject_on_load:     true
+            delete_on_update:   true
+            delete_on_remove:   true
+        programas_images:
+            uri_prefix:        '%path.imagenesProgramas%'
+            upload_destination: '%kernel.root_dir%/../public/uploads/programas'
+            namer:
+                service: vich_uploader.namer_uniqid
+                #options: { property: 'slug'} # supposing that the object contains a "slug" attribute or a "getSlug" method
+            inject_on_load:     true
+            delete_on_update:   true
+            delete_on_remove:   true
+        documento_image:
+            uri_prefix:       '%path.documentosResources%'
+            upload_destination: '%kernel.root_dir%/../public/uploads/documentos'
+            namer:
+                service: vich_uploader.namer_uniqid
+                #options: { property: 'slug'} # supposing that the object contains a "slug" attribute or a "getSlug" method
+            inject_on_load:     true
+            delete_on_update:   true
+            delete_on_remove:   true
+        resource_image:
+            uri_prefix:       '%path.imagenesResources%'
+            upload_destination: '%kernel.root_dir%/../public/uploads/resources'
+            namer:
+                service: vich_uploader.namer_uniqid
+                #options: { property: 'slug'} # supposing that the object contains a "slug" attribute or a "getSlug" method
+            inject_on_load:     true
+            delete_on_update:   true
+            delete_on_remove:   true
+        tematicas_images:
+            uri_prefix:       '%path.imagenesTematicas%'
+            upload_destination: '%kernel.root_dir%/../public/uploads/tematicas'
+            namer:
+                service: vich_uploader.namer_uniqid
+                #options: { property: 'slug'} # supposing that the object contains a "slug" attribute or a "getSlug" method
+            inject_on_load:     true
+            delete_on_update:   true
+            delete_on_remove:   true
+        banners_images:
+            uri_prefix:       '%path.imagenesBanners%'
+            upload_destination: '%kernel.root_dir%/../public/uploads/banners'
+            namer:
+                service: vich_uploader.namer_uniqid
+                #options: { property: 'slug'} # supposing that the object contains a "slug" attribute or a "getSlug" method
+            inject_on_load:     true
+            delete_on_update:   true
+            delete_on_remove:   true
+        organizacion_documentos:
+            uri_prefix:       '%path.documentosOrganizaciones%'
+            upload_destination: '%kernel.root_dir%/../public/uploads/organizaciones'
+            namer:
+                service: vich_uploader.namer_uniqid
+                #options: { property: 'slug'} # supposing that the object contains a "slug" attribute or a "getSlug" method
+            inject_on_load:     true
+            delete_on_update:   true
+            delete_on_remove:   true
+        agendas_images:
+            uri_prefix:       '%path.imagenesAgendas%'
+            upload_destination: '%kernel.root_dir%/../public/uploads/agendas'
+            namer:
+                service: vich_uploader.namer_uniqid
+                #options: { property: 'slug'} # supposing that the object contains a "slug" attribute or a "getSlug" method
+            inject_on_load:     true
+            delete_on_update:   true
+            delete_on_remove:   true

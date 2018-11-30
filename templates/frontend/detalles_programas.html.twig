@@ -1,0 +1,171 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %}{{programa.titulo}}{% endblock %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div class="container">
+      <!-- Page Heading/Breadcrumbs -->
+      <div style="background-color:#0075b8;color:white;">
+        <h4 class="mt-4 mb-3">
+          {% if programa.tematicas %}
+            {% for tematica in programa.tematicas %}
+               <a class="hashtag_tematica" href="{{path('programas_tematica',{'tematica':tematica.id})}}">#{{tematica.nombre}}</a>&nbsp
+            {% endfor %}
+          {% endif %}
+        </h4> 
+      </div>
+      <div class="row">
+        <!-- Blog Entries Column -->  
+        <div class="col-md-8">
+            <div  style="text-align:right;"><strong>{{programa.fechaCreacion|date('d/m/Y')}}</strong></div>
+          <!-- Blog Post -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h2 class="card-title">
+                  {{programa.titulo}}
+              </h2>
+              <div style="text-align:center;">
+                {% if programa.imagen %}
+                    <img class="img-fluid" src="{{asset('uploads/programas/'~programa.imagen)}}" >
+                {% endif %}
+              </div>
+              <p class="card-text">
+                <div style="text-align:center;">
+                    <strong>
+                            {{programa.resumen}}
+                    </strong>
+                </div>
+                {{programa.desarrollo|raw}}
+                <br>
+                 {% if programa.resources|length > 0 %}
+                    <h4>Galería de imagenes<h4>
+                    <div style="text-align:center;">
+                      <div class="galleria" >
+                        {% for resource in  programa.resources %}
+                          <img  src="{{asset('uploads/resources/'~resource.path)}}" data-title="resource.epigrafe" data-description="resource.epigrafe">
+                        {% endfor %}
+                      </div>
+                    </div>
+                {% endif %}
+
+                {% if programa.documentos|length > 0 %}
+                    <h4>Documentos anexos<h4>
+                    <div style="text-align:left;">
+                        {% for documento in  programa.documentos %}
+                        
+                            <div style="text-decoration:none;padding-left:10px;">
+                                <h6>
+                                    <a  target="_blank" href="{{asset('uploads/documentos/'~documento.path)}}">
+                                        {% if documento.epigrafe %}
+                                             {{documento.epigrafe}}
+                                        {% else %}
+                                             {{documento.path}}
+                                        {% endif %}
+                                       
+                                    </a>
+                                </h6>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <p class="card-text">
+                    {% if programa.telefono or programa.mail or programa.pagina %}
+                      <strong>Datos de contacto:</strong> <br>
+                    {% endif %}
+                    {% if programa.telefono %}
+                      <p>Teléfono:{{programa.telefono}}</p>
+                    {% endif %}
+                    {% if programa.mail %}
+                      <p>Mail: {{programa.mail}}</p>
+                    {% endif %}
+                    {% if programa.pagina %}
+                      {% if programa.paginaNombre %}
+                        <p>Pagina de Contacto: <a  target="_blank" href="http://{{programa.pagina}}">{{programa.paginaNombre}}</a></p>
+                      {% else %}
+                       <p> Pagina de Contacto: <a  target="_blank" href="http://{{programa.pagina}}">{{programa.pagina}}</a></p>
+                      {% endif %}
+                    {% endif %}
+                  </p>
+                  {% if programa.ong %}
+                    <h4>ONG que publico el programa:</h4>
+                    <div>
+                      {{ programa.ong.nombreOrganizacion }}
+                    </div>
+                  {% endif %}
+                  
+                  
+
+            </div>  
+          </div>
+        </div>
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+          <h4 class="panel-title">
+						Programas Relacionados
+					</h4>
+          {% for programa_rel in ultimos_programas %}
+            <div class="card my-4">
+                <a href="{{path('detalles_programas',{'id':programa_rel.id})}}" class="links_articulos">
+                    {% if programa_rel.imagen %}
+                        <img class="img-fluid" src="{{asset('uploads/programas/'~programa_rel.imagen)}}" >
+                    {% endif %}
+                    <div class="card-body">
+                        {{programa_rel.titulo|raw}}
+                    </div>
+                <a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <!-- /.row -->
+      {% if not ultimas_noticias is empty %}
+        <h4 class="panel-title">
+					Noticias Relacionadas
+				</h4>
+        <br>
+      {% endif %}
+      <div class="row">
+        {% for noticia in ultimas_noticias %}
+          <div class="col-lg-4 col-sm-6 portfolio-item">
+          <div class="card h-100">
+            <a href="{{path('detalle_noticia',{'id':noticia.id})}}" class="hvr-shrink links_articulos">
+              <img class="card-img-top" src="{{asset('uploads/noticias/'~noticia.imagen)}}" alt="">
+              <div class="card-body">
+                <h6 class="card-title">
+                 {{noticia.titulo}}
+                </h6>
+                <p class="card-text">  
+                  <p>{{ (noticia.bajada|length > 100 ? noticia.bajada|slice(0, 100) ~ '...' : noticia.bajada ) }}</p>
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endblock %}
+
+   {% block javascripts %}
+        {{parent()}}
+        
+        <link type="text/css" rel="stylesheet" href="{{ asset('galleria/themes/classic/galleria.classic.css')}}">
+        <script src="{{ asset('galleria/galleria-1.5.7.min.js') }}"></script>
+        <script src="{{ asset('galleria/themes/classic/galleria.classic.min.js') }}"></script>
+        <script>
+            if($('.galleria')[0]){
+              $('.galleria').galleria({
+                width: 700,
+                height: 467 //--I made heights match
+              });
+                Galleria.run('.galleria', {
+                    height: 300,
+                    wait: true
+              });
+            }
+            
+        </script>
+    {% endblock %}
+    

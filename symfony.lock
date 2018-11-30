@@ -1,0 +1,56 @@
+{
+    "alterphp/easyadmin-extension-bundle": {
+        "version": "v1.3.2"
+    },
+    "easycorp/easy-log-handler": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
+        }
+    },
+    "easycorp/easyadmin-bundle": {
+        "version": "1.17",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.17",
+            "ref": "66070ea553247b0cd5275e21d0fe5399a25f40be"
+        }
+    },
+    "facebook/webdriver": {
+        "version": "1.6.0"
+    },
+    "friendsofsymfony/ckeditor-bundle": {
+        "version": "1.2.0"
+    },
+    "gedmo/doctrine-extensions": {
+        "version": "v2.4.36"
+    },
+    "markbaker/complex": {
+        "version": "1.4.7"
+    },
+    "mukadi/chartjs-builder": {
+        "version": "1.0.1"
+    },
+    "mukadi/chartjs-bundle": {
+        "version": "1.0.2"
+    },
+    "phpoffice/phpspreadsheet": {
+        "version": "1.5.0"
+    },
+    "stof/doctrine-extensions-bundle": {
+        "version": "1.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.2",
+            "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
+        }
+    },
+    "symfony/panther": {
+        "version": "v0.2.0"
+    }
+}

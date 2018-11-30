@@ -1,0 +1,200 @@
+easy_admin:
+    entities:
+        Ong:
+            class: App\Entity\Ong
+            controller: App\Controller\OngController
+            label: 'Ongs y Jurisdicciones'
+            role: ROLE_USER
+            list:
+                title: "Ongs y Jurisdicciones"
+                fields:
+                    - id
+                    - { property: 'publicado', label: 'Publicado', type: 'boolean' }
+                    - { property: 'nombreOrganizacion', label: 'Ong/Jurisdicción' }
+                    - { property: 'cuit', label: 'CUIT', format: '%010s' }
+                    - { property: 'contacto', label: 'Contacto' }
+                    - { property: 'esJurisdiccion', type: 'boolean' }
+                    - { property: 'colaborators', label: 'Colaboradores confirmados' }
+                    - { property: 'colaboratorsCuils', label: 'Colaboradores' }
+            form:
+                title: 'Crear Ong/Jurisdicción'
+                fields:
+                    - { type: 'group', label: 'Información básica' }
+                    - { property: 'nombreOrganizacion', label: 'Nombre de la Organización' }
+                    - { property: 'tematicas', label: 'Temática principal', css_class: 'col-md-6' }
+                    - { property: 'subTematicas', label: 'Sub temática', css_class: 'col-md-6' }
+                    - { property: 'formaJuridica', label: 'Forma Jurídica', type: 'choice', css_class: 'col-md-6', type_options: { choices:
+                        {
+                            'ASOCIACIÓN CIVIL': 0,
+                            'COMUNIDAD INDIGENA': 1,
+                            'COOPERATIVA': 2,
+                            'FUNDACIÓN': 3,
+                            'GRUPO COMUNITARIO': 4,
+                            'GRUPO DE PERSONAS': 5,
+                            'MUTUAL': 6,
+                            'NO ESPECIFICA': 7,
+                            'SOCIEDAD DE FOMENTO': 8
+                        } }}
+                    - { property: 'matricula', label: 'Matrícula (Registro de organizaciones)', css_class: 'col-md-6' }
+                    - { property: 'cuit', label: 'Nro CUIT', type: 'text', css_class: 'col-md-6' }
+                    - { property: 'direccion', label: 'Dirección (Calle, Nro, Dto, Barrio, Piso)', css_class: 'col-md-6' }
+                    - { property: 'localidad', css_class: 'col-md-6', type: 'choice', type_options: { choices:
+                        {
+                            'Ninguna': 0,
+                            'Resistencia': 1,
+                            'Avia Terai': 3,
+                            'Barranqueras': 4,
+                            'Barrio los Pescadores': 5,
+                            'Basail': 6,
+                            'Campo largo': 7,
+                            'Capitán Solari': 8,
+                            'Charadai': 9,
+                            'Charata': 10,
+                            'Chorotis': 11,
+                            'Ciervo Petiso': 12,
+                            'Colonia Aborigen': 13,
+                            'Colonia Baranda': 14,
+                            'Colonia Benitez': 15,
+                            'Colonia Elisa': 16,
+                            'Colonia Popular': 17,
+                            'Colonias Unidas': 18,
+                            'Concepción del Bermejo': 19,
+                            'Coronel Du Graty': 20,
+                            'Corzuela': 21,
+                            'Cote Lai': 22,
+                            'El Espinillo': 23,
+                            'El Sauzal': 24,
+                            'El Sauzalito': 25,
+                            'Enrique Urien': 26,
+                            'Estación General Obligado': 27,
+                            'Fontana': 28,
+                            'Fortín Las Chuñas': 29,
+                            'Fortín Lavalle': 30,
+                            'Fuerte ESperanza': 31,
+                            'Gancedo': 32,
+                            'General Capdevilla': 33,
+                            'General José de San Martín': 34,
+                            'General Pinedo': 35,
+                            'General Vedia': 36,
+                            'Haumonia': 37,
+                            'Hermoso Campo': 38,
+                            'Horquilla': 39,
+                            'Ingeniero Barnet': 40,
+                            'Isla del Cerrito': 41,
+                            'Itín': 42,
+                            'Juan José Castelli': 43,
+                            'La Clotilde': 44,
+                            'La Eduvigis': 45,
+                            'La Escondida': 46,
+                            'La Leonesa': 47,
+                            'La Sábana': 48,
+                            'La Tigra': 49,
+                            'La Verde': 50,
+                            'Laguna Blanca': 51,
+                            'Laguna Limpia': 52,
+                            'Lapachito': 53,
+                            'Las Breñas': 54,
+                            'Las Garcitas': 55,
+                            'Las Palmas': 56,
+                            'Los Frentones': 57,
+                            'Machagai': 58,
+                            'Makallé': 59,
+                            'Margarita Belén': 60,
+                            'Mesón de Fierro': 61,
+                            'Miraflores': 62,
+                            'Napalpí': 63,
+                            'Napenay': 64,
+                            'Nueva Pompeya': 65,
+                            'Pampa Almirón': 66,
+                            'Pampa del Indio': 67,
+                            'Pampa del Infierno': 68,
+                            'Pampa Landriel': 69,
+                            'Presidencia de la Plaza': 70,
+                            'Presidencia Roque Sáenz Peña': 71,
+                            'Puerto Bermejo': 72,
+                            'Puerto Eva Perón': 73,
+                            'Puerto Lavalle': 74,
+                            'Puerto Tirol': 75,
+                            'Puerto Vilelas': 76,
+                            'Quitilipi': 77,
+                            'Río Muerto': 78,
+                            'Samuhú': 79,
+                            'San Bernardo': 80,
+                            'Santa Sylvina': 81,
+                            'Selvas del Río de Oro': 82,
+                            'Taco Pozo': 83,
+                            'Tres Isletas': 84,
+                            'Venados Grandes': 85,
+                            'Villa Angela': 86,
+                            'Villa Berthet': 87,
+                            'Villa El Palmar': 88,
+                            'Villa Río Bermejito': 89,
+                            'Wichi': 90,
+                            'Zaparinqui': 91
+                        } }}
+                    - { property: 'codigoPostal', label: 'Código Postal', css_class: 'col-md-6' }
+                    - { property: 'aportes', label: 'Si recibe aportes del estado selecciónelos', css_class: 'col-md-12' }
+                    - { type: 'group', label: 'Correo y Redes Sociales de la ONG' }
+                    - { property: 'correo', label: 'Correo electrónico', css_class: 'col-md-6' }
+                    - { property: 'facebook', label: 'Facebook', css_class: 'col-md-6' }
+                    - { property: 'twitter', label: 'Twitter', css_class: 'col-md-6' }
+                    - { property: 'instagram', label: 'Instagram', css_class: 'col-md-6' }
+                    - { type: 'group', label: 'Información del contacto' }
+                    - { property: 'nombre', label: 'Nombre', css_class: 'col-md-6' }
+                    - { property: 'apellido', label: 'Apellido', css_class: 'col-md-6' }
+                    - { property: 'celular', label: 'Celular (Unicamente números)', css_class: 'col-md-6' }
+                    - { property: 'telefono', label: 'Tel. Fijo (Unicamente números)', css_class: 'col-md-6' }
+                    - { type: 'group', css_class: 'col-md-12' }
+                    - { property: 'observaciones', css_class: 'col-md-12', label: 'Observaciones' }
+                    - { property: 'documentos', label: "Documentación", type: 'collection', type_options: { entry_type: 'App\Form\DocumentoFileType', by_reference: false }}
+                    - { type: 'group', label: 'Colaboradores' }
+                    -
+                        property: 'colaboratorsCuils'
+                        type: 'collection'
+                        label: 'Agregar CUIT/CUIL'
+                        css_class: 'col-md-12'
+                        type_options:
+                            entry_type: App\Form\ColaboratorType
+                            allow_add: true
+                            by_reference: false
+                    -
+                        property: 'colaborators'
+                        label: 'Colaboradores Confirmados'
+                        css_class: 'col-md-12'
+                        type_options:
+                            by_reference: false
+                        role: ROLE_SUPER_ADMIN
+                    - { type: 'group', css_class: 'col-md-12' }
+                    - { property: 'publicado', css_class: 'col-md-6', role: ROLE_SUPER_ADMIN }
+                    - { property: 'esJurisdiccion', css_class: 'col-md-6', role: ROLE_SUPER_ADMIN }
+            edit:
+                title: 'Editar Ong/Jurisdicción'
+            delete:
+                role: ROLE_ONG
+            show:
+                fields:
+                    - { property: 'nombreOrganizacion', label: 'Nombre de la Organización', css_class: 'col-md-12' }
+                    - { property: 'tematicas', label: 'Temática principal', css_class: 'col-md-6' }
+                    - { property: 'subTematicas', label: 'Sub temática', css_class: 'col-md-6' }
+                    - { property: 'formaJuridica', label: 'Forma Jurídica', css_class: 'col-md-6' }
+                    - { property: 'matricula', label: 'Matrícula (Registro de organizaciones)', css_class: 'col-md-6' }
+                    - { property: 'cuit', label: 'Nro CUIT', css_class: 'col-md-6' }
+                    - { property: 'direccion', label: 'Dirección (Calle, Nro, Dto, Barrio, Piso)', css_class: 'col-md-6' }
+                    - { property: 'localidad', css_class: 'col-md-6', template: 'backend/listasEasyAdmin/valorLocalidad' }
+                    - { property: 'codigoPostal', label: 'Código Postal', css_class: 'col-md-6' }
+                    - { property: 'aportes', label: 'Si recibe aportes del estado selecciónelos', css_class: 'col-md-12' }
+                    - { property: 'correo', label: 'Correo electrónico', css_class: 'col-md-6' }
+                    - { property: 'facebook', label: 'Facebook', css_class: 'col-md-6' }
+                    - { property: 'twitter', label: 'Twitter', css_class: 'col-md-6' }
+                    - { property: 'instagram', label: 'Instagram', css_class: 'col-md-6' }
+                    - { property: 'nombre', label: 'Nombre', css_class: 'col-md-6' }
+                    - { property: 'apellido', label: 'Apellido', css_class: 'col-md-6' }
+                    - { property: 'celular', label: 'Celular (Unicamente números)', css_class: 'col-md-6' }
+                    - { property: 'telefono', label: 'Tel. Fijo (Unicamente números)', css_class: 'col-md-6' }
+                    - { property: 'observaciones', css_class: 'col-md-12', label: 'Observaciones' }
+                    - { property: 'documentos', label: 'Documentación', template: 'backend\documento_field.html.twig', css_class: 'col-md-12' }
+                    - { property: 'colaboratorsCuils', css_class: 'col-md-12', label: 'CUIT/CUIL' }
+                    - { property: 'colaborators', css_class: 'col-md-12', label: 'Colaboradores Confirmados' }
+                    - { property: 'publicado', css_class: 'col-md-6' }
+                    - { property: 'esJurisdiccion', css_class: 'col-md-6' }
+                    

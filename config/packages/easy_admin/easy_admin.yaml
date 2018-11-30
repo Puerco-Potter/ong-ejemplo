@@ -1,0 +1,14 @@
+easy_admin_extension:
+    minimum_role: ROLE_USER
+
+easy_admin:
+    site_name: '<img src="/img/logos_head.png" />'
+    list:
+        actions:
+            - { name: 'show',icon: 'pen-square', type_options: 'style="color:black;', label: 'Mostrar' }
+            - { name: 'edit', icon: 'pencil', label: 'Editar' }
+            - { name: 'delete', icon: 'ban', label: 'Eliminar'}
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'

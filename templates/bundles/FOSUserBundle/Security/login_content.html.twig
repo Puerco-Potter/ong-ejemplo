@@ -1,0 +1,33 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 offset-md-3 col-sm-8 offset-sm-2">
+    <div class="card" style="border: 5px solid black; border-radius:4px; box-shadow: -5px -5px;">
+        <div style="background-color:#0075b8">
+            <img class="img-responsive" style="width:50%;margin-left:auto;margin-right:auto;" src="{{ asset('img/logos_head.png')}}" >
+        </div>
+        <div style="padding-top:30px" class="card-body">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            <form action="{{ path("fos_user_security_check") }}" method="post" id="loginform" class="form-horizontal" role="form">
+                {% if csrf_token %}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                {% endif %}
+                <div style="margin-bottom: 25px" class="input-group">
+                    {# <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> #}
+                    <input id="login-username" type="text" class="form-control" name="_username" value="{{ last_username }}" placeholder="{{ 'security.login.username'|trans }}" required="required">
+                </div>
+                <div style="margin-bottom: 25px" class="input-group">
+                    {# <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span> #}
+                    <input id="login-password" type="password" class="form-control" name="_password" placeholder="{{ 'security.login.password'|trans }}" required="required">
+                    {# <span id="verContrasenia" class="input-group-addon" onclick="cambiarVerContrasenia()"><i id="iconoContrasenia" class="glyphicon glyphicon-eye-close"></i></span> #}
+                </div>
+                <div style="margin-top:10px ;text-align:center;" class="form-group">
+                    <div class="col-sm-12 controls">
+                        <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" style="text-align:center"class="btn btn-info"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

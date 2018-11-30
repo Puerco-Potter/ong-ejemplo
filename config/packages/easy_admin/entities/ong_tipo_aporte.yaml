@@ -1,0 +1,28 @@
+easy_admin:
+    entities:
+        OngTipoAporte:
+            class: App\Entity\OngTipoAporte
+            label: 'Ong Tipos de Aporte'
+            role: ROLE_ADMIN
+            list:
+                title: '%%entity_label%%'
+                fields:
+                    - { property: 'descripcion' }
+                    - { property: 'activo' }
+            form:
+                fields:
+                    - { property: 'descripcion' }
+                    - { property: 'activo' }
+                    - { property: 'clasificacion', label: 'clasificación', type: 'choice', css_class: 'col-md-6', type_options: { choices:
+                        {
+                            'Monetario': 0,
+                            'RRHH': 1,
+                            'Mueble': 2,
+                            'Inmueble': 3,
+                            'Derechos de Credito': 4,
+                            'Servicios': 5
+                        } }}
+            edit:
+                title: 'Editar Tipo de Aporte'
+            new:
+                title: 'Crear Tipo de Aporte'

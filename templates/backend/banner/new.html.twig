@@ -1,0 +1,74 @@
+{% form_theme form with easyadmin_config('design.form_theme') %}
+
+{% set _entity_config = easyadmin_entity(app.request.query.get('entity')) %}
+{% trans_default_domain _entity_config.translation_domain %}
+{% set _trans_parameters = { '%entity_name%': _entity_config.name|trans, '%entity_label%': _entity_config.label|trans } %}
+
+{% extends _entity_config.templates.layout %}
+
+{% block body_id 'easyadmin-new-' ~ _entity_config.name %}
+{% block body_class 'new new-' ~ _entity_config.name|lower %}
+
+{% block content_title %}
+{% spaceless %}
+    {% set _default_title = 'new.page_title'|trans(_trans_parameters, 'EasyAdminBundle') %}
+    {{ _entity_config.new.title is defined ? _entity_config.new.title|trans(_trans_parameters) : _default_title }}
+{% endspaceless %}
+{% endblock %}
+
+{% block main %}
+    {% block entity_form %}
+        {{ form(form) }}
+    {% endblock entity_form %}
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(function() {
+            $('.new-form').areYouSure({ 'message': '{{ 'form.are_you_sure'|trans({}, 'EasyAdminBundle')|e('js') }}' });
+
+            $('.form-actions').easyAdminSticky();
+        });
+    </script>
+    <script>
+       $( document ).ready(function() {
+
+           //comienzo con las noticias y los post desactivado,seria el banner solo
+            $('#banner_noticia').prop('disabled', true);
+		    $('#banner_programa').prop('disabled', true);
+            $('#banner_noticia').removeAttr('required');
+            $('#banner_programa').removeAttr('required');
+
+            //para el caso de que cambie el select
+            $('#banner_tipo').on('change', function(){
+
+		        if($(this).val() == 'Solo Imagen')
+		        {	
+		            $('#banner_noticia').prop('disabled', true);
+		            $('#banner_programa').prop('disabled', true);
+                    $('#banner_noticia').removeAttr('required');
+                    $('#banner_programa').removeAttr('required');
+		        } 
+		        else if( $(this).val() == 'Noticia')
+		       {
+		            $('#banner_noticia').removeAttr("disabled");
+		            $('#banner_noticia').prop('required', true);
+                    $('#banner_programa').prop('disabled', true);
+                    $('#banner_programa').removeAttr('required');
+		       }
+		       else if( $(this).val() == 'Programa'){
+		       	    $('#banner_programa').removeAttr("disabled");
+		            $('#banner_programa').prop('required', true);
+                    $('#banner_noticia').prop('disabled', true);
+                    $('#banner_noticia').removeAttr('required');
+		       }
+		    });
+        });
+
+        	
+    </script>
+
+    {{ include('@EasyAdmin/default/includes/_select2_widget.html.twig') }}
+{% endblock %}

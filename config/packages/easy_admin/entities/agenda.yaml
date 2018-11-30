@@ -1,0 +1,42 @@
+easy_admin:
+    entities:
+        Agenda:
+            class: App\Entity\Agenda
+            controller: App\Controller\AgendaController
+            label: 'Agenda'
+            role: ROLE_USER
+            list:
+                title: "Agenda"
+                fields:
+                    - id
+                    - { property: 'publicado', label: 'Publicado', type: 'boolean' }
+                    - { property: 'titulo', label: 'Titulo', css_class: 'col-md-12' }
+                    - { property: 'tematicas', label: 'Temáticas', type: 'array', css_class: 'col-md-12' }
+                    - { property: 'fecha', label: 'Fecha y Hora', type: 'datetime' }
+                    - { property: 'imagen', type: 'image', base_path: '%path.imagenesAgendas%' }
+                    - { property: 'comentarios' }
+            form:  # <-- 'form' is applied to both 'new' and 'edit' views
+                title: 'Crear un Evento'
+                fields: 
+                    - { type: 'group', label: 'Evento', css_class: 'col-md-12' }
+                    - { property: 'titulo', label: 'Título', css_class: 'col-md-9' }
+                    - { property: 'publicado', css_class: 'col-md-3', role: ROLE_SUPER_ADMIN }
+                    - { property: 'descripcion', label: 'Descripción', css_class: 'col-md-12',type: textarea}
+                    - { property: 'imageFile', type: 'vich_image' , label: 'Imagen' }
+                    - { property: 'fecha', label: 'Fecha', type_options: { widget: 'single_text' }, type: 'date' }
+                    - { property: 'tematicas', label: 'Temáticas' }
+                    - { property: 'comentarios', role: ROLE_SUPER_ADMIN, type: 'collection', type_options: { entry_type: 'App\Form\NoticiaComentarioType', by_reference: false }, css_class: 'col-md-12'}
+            show:
+                fields:
+                    - id
+                    - { property: 'titulo' , label: 'Titulo', css_class: 'col-md-12' }
+                    - { property: 'publicado' , label: 'Publicado', css_class: 'col-md-3' }
+                    - { property: 'tematicas',label: 'Temáticas', css_class: 'col-md-12' }
+                    - { property: 'fecha' , label: 'Fecha y Hora', type: 'datetime' }
+                    - { property: 'imagen', type: 'image', base_path: '%path.imagenesAgendas%' }
+                    - { property: 'tematicas', label: 'Temáticas' }
+                    - { property: 'comentarios', css_class: 'col-md-12' }
+            edit:
+                title: 'Editar Evento'
+            search:
+                fields: [tematicas.nombre, titulo]

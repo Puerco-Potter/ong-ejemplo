@@ -1,0 +1,64 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %}Estad&iacute;sticas{% endblock %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div class="container" style="min-height:400px;">
+      <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3">Estad&iacute;sticas
+        </h1> 
+         <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4>ONGs Matriculadas</h4>
+                        {{ mukadi_chart(chartM) }}
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4>ONGs por Tem&aacute;ticas</h4>
+                        {{ mukadi_chart(chartT) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4>ONGs por Localidad</h4>
+                        {{ mukadi_chart(chartL) }}
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4>ONGs por Tipo</h4>
+                        {{ mukadi_chart(chartJ) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4>Lista de ONGs</h4>
+                        <a href="{{ path('excel',{'tipo':'ongs'} ) }}">Descargar Excel Lista de ONGs</a>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4>Lista de Tem&aacute;ticas</h4>
+                        <a href="{{ path('excel',{'tipo':'tematicas'}) }}">Descargar Excel Lista de Tem&aacute;ticas</a>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('bundles/mukadichartjs/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/mukadichartjs/Chart.bundle.min.js') }}"></script>
+    <script src="{{ asset('bundles/mukadichartjs/mukadi.chart.min.js') }}"></script>
+{% endblock %}

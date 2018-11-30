@@ -1,0 +1,53 @@
+easy_admin:
+    entities:
+        Banner:
+            class: App\Entity\Banner
+            label: 'Banner'
+            role: ROLE_BANNER
+            controller: App\Controller\BannerController
+            # role_prefix: ROLE_PAGINA
+            # help: 'Global message displayed in all views'
+            templates:
+                # Twig namespace template syntax
+                new: 'backend\banner\new.html.twig'
+            list:
+                title: "Banner"
+                fields:
+                    - id
+                    - { property: 'publicado' , label: 'Publicado', type: 'toggle'}
+                    - { property: 'orden',label: 'Orden'}
+                    - { property: 'titulo' , label: 'Título', type: 'text'}
+                    - { property: 'imagen', type: 'image', base_path: '%path.imagenesBanners%' }
+                    - { property: 'tipo', type: 'Tipo'}
+                    - { property: 'fechaCreacion', label: 'Creación', type: 'date' }
+                    - { property: 'fechaModificacion', label: 'Modificación', type: 'date'}
+            form:  # <-- 'form' is applied to both 'new' and 'edit' views
+                title: 'Crear un Banner'
+                fields: 
+                    - { property: publicado, css_class: 'col-md-12'}
+                    - { property: 'orden',label: 'Orden'}
+                    - { property: 'titulo',label: 'Título', css_class: 'col-md-12'}
+                    - { property: 'descripcion',  label: 'Descripción', css_class: 'col-md-12', type: textarea}
+                    - { property: 'imageFile', type: 'vich_image' , label: 'Imagen Principal' ,css_class: 'ckeditor col-md-12'}
+                    - { property: 'tipo' , label: 'Tipo',css_class: 'col-md-12' ,type: 'choice', type_options: { multiple: false, choices: 
+                        {   'Solo Imagen': Solo Imagen,
+                            'Noticia': Noticia,
+                            'Programa': Programa
+                        } }}
+                    - { property: 'noticia',label: Noticia, css_class: 'col-md-12'}
+                    - { property: 'programa',label: Programa, css_class: 'col-md-12'}
+            show:
+                fields:
+                    - id
+                    - { property: 'publicado' , label: 'Publicado', type: 'toggle', css_class: 'col-md-12'}
+                    - { property: 'orden',label: 'Orden'}
+                    - { property: 'titulo', label: 'Título' , css_class: 'col-md-12'}
+                    - { property: 'descripcion', label: "Descripción", css_class: 'col-md-12'}
+                    - { property: 'imagen', type: 'image', base_path: '%path.imagenesBanners%', css_class: 'col-md-12' }
+                    - { property: 'tipo', label: 'tipo' , css_class: 'col-md-12'}
+                    - { property: 'noticia', type: "Noticia", css_class: 'col-md-12'}
+                    - { property: 'programa',label: "Programa" ,css_class: 'col-md-12'}
+                    - { property: 'fechaCreacion', label: 'Creación', type: 'date', css_class: 'col-md-12' }
+                    - { property: 'fechaModificacion', label: 'Modificación', type: 'date', css_class: 'col-md-12'}
+            edit:
+                title: 'Editar Banner'

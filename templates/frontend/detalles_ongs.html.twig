@@ -1,0 +1,164 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %}{{ong.nombreorganizacion}}{% endblock %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div class="container">
+      <!-- Page Heading/Breadcrumbs -->
+      <div style="background-color:#0075b8;color:white;">
+        <h4 class="mt-4 mb-3">
+          {% if ong.tematicas %}
+            {% for tematica in ong.tematicas %}
+              <a class="hashtag_tematica" href="{{path('noticias_tematica',{'tematica':tematica.id})}}">#{{tematica.nombre}}</a>&nbsp
+            {% endfor %}
+          {% endif %}
+        </h4> 
+      </div>
+      <div class="row">
+        <!-- Blog Entries Column -->  
+        <div class="col-md-8">
+            <div  style="text-align:right;"></div>
+          <!-- Blog Post -->
+          <div class="card mb-4">
+                
+            <div class="card-body">
+              <h2 class="card-title">
+                    {{ong.nombreorganizacion}}
+              </h2>
+              <div style="text-align:center;">
+              </div>
+              <p class="card-text">
+                
+                <h4>Localidad:</h4>
+                <div>
+                        {{ong.localidadesString}}
+                </div>
+                {% if ong.direccion %}
+                    <h4>Direccion:</h4>
+                    <div>
+                            {{ong.direccion}}
+                    </div>
+                {% endif %}
+                {% if ong.aportes %}
+                    <h4>Tipos de Aportes:</h4>
+                    <div>
+                        {% for aporte in ong.aportes %}
+                            {{aporte.descripcion}}<br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if ong.correo %}
+                    <h4>E-mail:</h4>
+                    <div>
+                            {{ong.correo}}
+                    </div>
+                {% endif %}
+                {% if ong.facebook %}
+                    <h4>Facebook:</h4>
+                    <div>
+                            {{ong.facebook}}
+                    </div>
+                {% endif %}
+                {% if ong.instagram %}
+                    <h4>Instagram:</h4>
+                    <div>
+                            {{ong.instagram}}
+                    </div>
+                {% endif %}
+                {% if ong.twitter %}
+                    <h4>Twitter:</h4>
+                    <div>
+                        {{ong.twitter}}
+                    </div>
+                {% endif %}
+            </div>  
+          </div>
+        </div>
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+          <h4 class="panel-title">
+						Noticias Relacionadas
+					</h4>
+          {% for noticia_rel in noticias %}
+            <div class="card my-4">
+                <a href="{{path('detalle_noticia',{'id':noticia_rel.id})}}" class="links_articulos">
+                    {% if noticia_rel.imagen %}
+                        <img class="img-fluid" src="{{asset('uploads/noticias/'~noticia_rel.imagen)}}" >
+                    {% endif %}
+                    <div class="card-body">
+                        {{noticia_rel.titulo|raw}}
+                    </div>
+                <a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <!-- /.row -->
+        <h4 class="panel-title">
+            Agenda
+        </h4>
+        <table class="table table-responsive table-striped" style="font-size:15px;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">TÍTULO</th>
+                        <th scope="col">FECHA</th>
+                        <th scope="col">LOGO</th>
+                        <th scope="col">DESCRIPCIÓN</th>
+                        <th scope="col">TEMATICAS</th>
+                        <th scope="col">ONG</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for agenda in agendas %}
+                    <tr>
+                        <td style="width:15%" >{{agenda.titulo}}</td>
+                        <td style="width:10%">{{agenda.fecha|date('d/m/Y H:i:')}}</td>
+                        <td style="width:15%"><img src="{{asset('uploads/agendas/'~agenda.imagen)}}" class="img-fluid"></td>
+                        <td style="width:30%">{{agenda.descripcion|raw}}</td>
+                        <td style="width:20%">
+                            {% for tematica in agenda.tematicas %}
+                                {{tematica.nombre}}
+                                {% if loop.index < agenda.tematicas|length  %}
+                                    , 
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        
+                        <td style="width:10%">
+                            {% if agenda.ong %}
+                                {{agenda.ong.nombreOrganizacion|raw}}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        <br>
+      
+      <div class="row">
+        
+      </div>
+    </div>
+  {% endblock %}
+
+   {% block javascripts %}
+        {{parent()}}
+        
+        <link type="text/css" rel="stylesheet" href="{{ asset('galleria/themes/classic/galleria.classic.css')}}">
+        <script src="{{ asset('galleria/galleria-1.5.7.min.js') }}"></script>
+        <script src="{{ asset('galleria/themes/classic/galleria.classic.min.js') }}"></script>
+        <script>
+            if($('.galleria')[0]){
+              $('.galleria').galleria({
+                width: 700,
+                height: 467 //--I made heights match
+              });
+                Galleria.run('.galleria', {
+                    height: 300,
+                    wait: true
+              });
+            }
+            
+        </script>
+    {% endblock %}

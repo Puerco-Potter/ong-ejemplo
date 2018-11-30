@@ -1,0 +1,17 @@
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: App\Entity\User
+    group:
+        group_class: App\Entity\Group
+    # service:                               # this lines
+    #     mailer: fos_user.mailer.twig_swift # this lines
+    from_email:
+        address: '%env(MAILER_USER_ADDRESS)%'
+        sender_name: '%env(MAILER_USER_NAME)%'
+    service:
+        mailer: 'fos_user.mailer.noop'
+        # mailer: 'fos_user.mailer.twig_swift' # Works as well
+    # registration:
+    #     form:
+    #         type: App\Form\RegistrationType

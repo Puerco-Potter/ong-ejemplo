@@ -1,0 +1,12 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% block fos_user_content %}
+    <object
+        id="objectTGD"
+        type="text/html"
+        data="http://stage.ventanillaunica.chaco.gov.ar/oauth/v2/auth?client_id=28_c4a5xtffgpsk4ks888kgww0404gc0kcg8w4wg44osskg08owg&scope=client&redirect_uri=http://ong-prueba.chaco.gov.ar/api/callback&response_type=code&state=VHUgR29iaWVybm8gRGlnaXRhbCAtIENoYWNv"
+        height="950" width="100%"
+    ></object>
+
+    {{ include('@FOSUser/Security/login_content.html.twig') }}
+{% endblock fos_user_content %}

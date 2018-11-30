@@ -1,0 +1,107 @@
+{% set _entity_config = easyadmin_entity(app.request.query.get('entity')) %}
+{# the empty string concatenation is needed when the primary key is an object (e.g. an Uuid object) #}
+{# {% set _entity_id = '' ~ attribute(entity, _entity_config.primary_key_field_name) %} #}
+{% trans_default_domain _entity_config.translation_domain %}
+
+{% extends _entity_config.templates.layout %}
+
+{# {% block body_id 'easyadmin-show-' ~ _entity_config.name ~ '-' ~ _entity_id %}
+{% block body_class 'show show-' ~ _entity_config.name|lower %} #}
+
+{% block content_title %}
+{# {% spaceless %}
+    {% set _default_title = 'show.page_title'|trans(_trans_parameters, 'EasyAdminBundle') %}
+    {{ _entity_config.show.title is defined ? _entity_config.show.title|trans(_trans_parameters) : _default_title }}
+{% endspaceless %} #}
+{% endblock %}
+
+
+{% block main %}
+
+    <div class="form-horizontal">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="card-title" >{{debate.titulo}} </h3>     
+                {% for tematica in debate.tematicas %}
+                    <span class="badge badge-primary" style="background-color:#0075b8">#{{tematica.nombre}}</span>            
+                {% endfor %}
+            </div>
+                <div class="panel-body">
+                    {{ debate.descripcion|raw }}
+                </div>
+        </div>
+            {% if paginado_comentarios %}
+
+             
+                        {% for comentario in  paginado_comentarios %}
+                            {% if loop.index is even %}
+                                <div class="direct-chat-msg right">
+                            {% else %}
+                                <div class="direct-chat-msg">
+                            {% endif %}
+                                <div class="direct-chat-info clearfix">
+                                {% if loop.index is even %}
+                                    <span class="direct-chat-name pull-right">
+                                {% else %}
+                                    <span class="direct-chat-name pull-left">
+                                {% endif %}
+                                        {% if comentario.user %}
+                                            Usuario:{{comentario.user.username}}
+                                        {% endif %}
+                                        <br>
+                                        {% if comentario.ong %}
+                                            ONG:{{comentario.ong.nombreOrganizacion}}
+                                        {% endif %}
+                                        <br>
+                                        <span class="direct-chat-timestamp pull-left">{{comentario.fechaCreacion|date('d/m/Y H:i:s')}}</span>
+                                    </span>
+                                </div>
+                                <!-- /.direct-chat-info -->
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                    {{comentario.comentario}}
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {{ pagerfanta(paginado_comentarios, 'twitter_bootstrap4_translated',{  'omitFirstPage': true ,'proximity': 2, 'prev_message' : 'Anterior', 'next_message': 'Siguiente' }) }}
+
+                    <div class="box-footer">
+                        <div class="input-group" style="float:left;width:80%;">
+                        {{ form_start(form_comentario) }}
+                            {{ form_errors(form_comentario.comentario) }}
+                            {{ form_widget(form_comentario.comentario) }}
+                            <hr>
+                            <span class="input-group-btn">
+                                {{ form_widget(form_comentario.enviar) }}
+                            </span>
+                            {{ form_end(form_comentario) }}
+                        </div>
+                 
+            {% endif %}
+        </div>
+      
+        
+            
+   
+
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(function() {
+            $('a.action-delete').on('click', function(e) {
+                e.preventDefault();
+
+                $('#modal-delete').modal({ backdrop: true, keyboard: true })
+                    .off('click', '#modal-delete-button')
+                    .on('click', '#modal-delete-button', function () {
+                        $('#delete-form').trigger('submit');
+                    });
+            });
+        });
+    </script>
+{% endblock %}

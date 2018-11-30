@@ -1,0 +1,118 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %}Género{% endblock %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div class="container">
+      <!-- Page Heading/Breadcrumbs -->
+      <h1 class="mt-4 mb-3">Lista de Programas
+      </h1> 
+      <div class="row">
+        <!-- Blog Entries Column -->
+        <div class="col-md-9">
+          <!-- Blog Post -->
+          <div class="card mb-5">
+            <div class="card-body">
+              <p class="card-text">
+               <div class="pagerfanta">
+                    <div class="row">
+                        {% for programa in paginado_programas.currentPageResults %}
+                            <div class="col-md-4 col-sm-6 portfolio-item">
+                                <a href="{{path('detalles_programas',{'id':programa.id})}}"  class="hvr-shrink links_articulos" ><img class="card-img-top" src="{{asset('uploads/programas/'~programa.imagen)}}" alt="">
+                                    <h6 class="card-title">
+                                    {{programa.titulo|raw}}
+                                    </h6>
+                                    <p class="card-text">
+                                    {# <div><p>{{ (programa.resumen|length > 100 ? programa.resumen|slice(0, 100) ~ '...' : programa.bajada)  }}</p></div> #}
+                                    </p>
+                                </a>
+                                
+                                <div style="background-color:#1879be;width:100%;color:white;padding-left:10px; " >
+                                    {% if programa.tematicas %}
+                                        {% for tematica in programa.tematicas %}
+                                            <a class="hashtag_tematica" href="{{path('programas_tematica',{'tematica':tematica.id})}}">#{{tematica.nombre}}</a>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% if loop.index is divisible by(3) %}
+                            </div>
+                            <div class="row">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <hr>
+                    {{ pagerfanta(paginado_programas, 'twitter_bootstrap4_translated',{ 'omitFirstPage': true , 'proximity': 2, 'prev_message' : 'Anterior', 'next_message': 'Siguiente' }) }}
+                </div>   
+            </div>  
+            
+          </div>
+        </div>
+        <div class="col-md-3">
+                <div class="panel-group">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								Temáticas
+							</h4>
+						</div>
+						<div  class="panel-collapse ">
+							<ul class="list-group">
+                                {% if tematica_seleccionada is defined %}
+                                    <a type="button"  class="list-group-item list-group-item-action links_articulos" 
+                                                href="{{path('programas')}}">TODAS LOS PROGRAMAS
+                                    </a>
+                                {% else %}
+                                    <a type="button" style="background-color:#1879be;color:white;" class="list-group-item list-group-item-action links_articulos" 
+                                                href="{{path('programas')}}">TODAS LOS PROGRAMAS
+                                    </a>
+                                {% endif %}
+								{% for tematica in tematicas %}
+                                    {% if tematica_seleccionada is defined %}
+                                        {% if tematica.id==tematica_seleccionada %}
+                                            <a type="button"  style="background-color:#1879be;color:white;" class="list-group-item list-group-item-action links_articulos" 
+                                                href="{{path('programas_tematica',{'tematica':tematica.id})}}">{{tematica.nombre}}
+                                            </a>
+                                        {% else %}
+                                            <a type="button"  class="list-group-item list-group-item-action links_articulos" 
+                                                href="{{path('programas_tematica',{'tematica':tematica.id})}}">{{tematica.nombre}}
+                                            </a>
+                                        {% endif %}
+                                    {% else %}
+                                        <a type="button"  class="list-group-item list-group-item-action links_articulos" 
+                                                href="{{path('programas_tematica',{'tematica':tematica.id})}}">{{tematica.nombre}}
+                                        </a>
+                                    {% endif %}
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+            <br>
+            {% if ultimas_noticias %}
+                <h4 class="panel-title">
+					Noticias
+				</h4>
+            {% endif %}
+            {% for noticia in ultimas_noticias %}
+                <div class="card my-4">
+                    <a href="{{path('detalle_noticia',{'id':noticia.id})}}" class="links_articulos" >
+                        {% if noticia.imagen %}
+                            <img src="{{asset('uploads/noticias/'~noticia.imagen)}}" class="img-fluid">
+                        {% endif %}
+                        <div class="card-body" >
+                        {{noticia.titulo}} 
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+      </div>
+      <!-- /.row -->
+
+    </div>
+
+
+  {% endblock %}
+ 

@@ -1,0 +1,14 @@
+easy_admin:
+    entities:
+        Contenido:
+            class: App\Entity\Contenido
+            label: 'Contenidos'
+            disabled_actions: ['show']
+            role: ROLE_ADMIN
+            form:
+                fields:
+                    - { property: 'codigo', css_class: 'col-md-12' }
+                    - { property: 'texto', css_class: 'col-md-12' }
+                    - { property: 'contenido', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType', css_class: 'ckeditor col-md-12' }
+                    - { property: 'imagenes', label: 'Imagenes', type: 'collection', type_options: { entry_type: 'App\Form\ContenidoImagenType', by_reference: false }, css_class: 'col-md-12'}
+                    - { type: 'divider' }

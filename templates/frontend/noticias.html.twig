@@ -1,0 +1,140 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %}Lista de Noticias{% endblock %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div class="container">
+      <!-- Page Heading/Breadcrumbs -->
+      <h1 class="mt-4 mb-3">Lista de Noticias
+      </h1> 
+      <div class="row">
+        <!-- Blog Entries Column -->
+        <div class="col-md-9">
+          <!-- Blog Post -->
+          <div class="card mb-5">
+            <div class="card-body">
+              <p class="card-text">
+               <div class="pagerfanta">
+                    <div class="row">
+                        {% for noticia in paginado_noticias.currentPageResults %}
+                            <div class="col-md-4 col-sm-6 portfolio-item">
+                                <a href="{{path('detalle_noticia',{'id':noticia.id})}}"  class="hvr-shrink links_articulos" ><img class="card-img-top" src="{{asset('uploads/noticias/'~noticia.imagen)}}" alt="">
+                                    <h6 class="card-title">
+                                    {{noticia.titulo|raw}}
+                                    </h6>
+                                    <p class="card-text">
+                                        <div><p>{{ (noticia.bajada|length > 100 ? noticia.bajada|slice(0, 100) ~ '...' : noticia.bajada)  }}</p></div>
+                                    </p>
+                                    
+                                </a>
+                                <div style="background-color:#1879be;width:100%;color:white; " >
+                                    
+                                        <div class="card bg-primary text-white">
+                                            <div class="card-header" id="headingOne" style="height: auto; padding-top:0%;padding-bottom:0%;">
+                                              <h5 class="mb-0">
+                                                <button class="btn btn-link text-white collapsed w-100 text-left" data-toggle="collapse" data-target="#collapse{{ noticia.id }}" aria-controls="collapse{{ noticia.id }}">
+                                                  Tematicas
+                                                </button>
+                                              </h5>
+                                            </div>
+                                        
+                                            <div id="collapse{{ noticia.id }}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                              <div class="card-body">
+                                                    {% if noticia.tematicas %}
+                                                        {% for tematica in noticia.tematicas %}
+                                                            <a class="hashtag_tematica" href="{{path('noticias_tematica',{'tematica':tematica.id})}}">#{{tematica.nombre}}</a>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                          </div>
+                                    
+                                </div>
+                            </div>
+                            {% if loop.index is divisible by(3) %}
+                            </div>
+                            <div class="row">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <hr>
+                    {{ pagerfanta(paginado_noticias, 'twitter_bootstrap4_translated',{  'omitFirstPage': true ,'proximity': 2, 'prev_message' : 'Anterior', 'next_message': 'Siguiente' }) }}
+                </div>   
+            </div>  
+          </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel-group">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								Temáticas
+							</h4>
+						</div>
+						<div  class="panel-collapse ">
+							<ul class="list-group">
+                                {% if tematica_seleccionada is defined %}
+                                    <a type="button"  class="list-group-item list-group-item-action links_articulos" 
+                                                href="{{path('noticias')}}">TODAS LAS NOTICIAS
+                                    </a>
+                                {% else %}
+                                    <a type="button" style="background-color:#1879be;color:white;" class="list-group-item list-group-item-action links_articulos" 
+                                                href="{{path('noticias')}}">TODAS LAS NOTICIAS
+                                    </a>
+                                {% endif %}
+								{% for tematica in tematicas %}
+                                    {% if tematica_seleccionada is defined %}
+                                        {% if tematica.id==tematica_seleccionada %}
+                                            <a type="button"  style="background-color:#1879be;color:white;" class="list-group-item list-group-item-action links_articulos" 
+                                                href="{{path('noticias_tematica',{'tematica':tematica.id})}}">{{tematica.nombre}}
+                                            </a>
+                                        {% else %}
+                                            <a type="button"  class="list-group-item list-group-item-action links_articulos" 
+                                                href="{{path('noticias_tematica',{'tematica':tematica.id})}}">{{tematica.nombre}}
+                                            </a>
+                                        {% endif %}
+                                    {% else %}
+                                        <a type="button"  class="list-group-item list-group-item-action links_articulos" 
+                                                href="{{path('noticias_tematica',{'tematica':tematica.id})}}">{{tematica.nombre}}
+                                        </a>
+                                    {% endif %}
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+            <br>
+            {% if ultimos_programas %}
+                <h4 class="panel-title">
+					Programas
+				</h4>
+            {% endif %}
+            
+            {% for programa in ultimos_programas %}
+                <div class="card my-4">
+                    <a href="{{path('detalles_programas',{'id':programa.id})}}"   >
+                        {% if programa.imagen %}
+                            <img src="{{asset('uploads/programas/'~programa.imagen)}}" class="img-fluid">
+                        {% endif %}
+                        <div class="card-body">
+                        {{programa.titulo}} 
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  {% endblock %}
+  {% block javascripts %}
+      {{parent()}}
+      <script>
+        $('#collapse1').collapse({
+            toggle: true
+            })
+      <script>
+  {% endblock %}

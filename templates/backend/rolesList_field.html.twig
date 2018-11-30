@@ -1,0 +1,42 @@
+
+{% set colors = field_options.label_colors|default(['primary']) %}
+
+{% set roles_array = {
+                'ROLE_DASHBOARD':'Panel central',
+                'ROLE_PAGINA': 'Pagina',
+                'ROLE_NOTICIA':'Noticia',
+                'ROLE_TAG_NOTICIA': 'Tag Noticia',
+                'ROLE_BANNER':'Banners',
+                'ROLE_TIPO_JUEGO': 'Tipo Juego',
+                'ROLE_JUEGO': 'Juego',
+                'ROLE_SORTEO':'Sorteo',
+                'ROLE_JUEGO_ESTIMULO':'Juego Estímulo',
+                'ROLE_EXTRACTO_LOTIMAX':'Extracto Lotimax',
+                'ROLE_EXTRACTO_OFICIAL':'Extracto Oficial',
+                'ROLE_EXTRACTO_TELEBINGO': 'Extracto Telebingo',
+                'ROLE_SORTEO_TELEBINGO':'Extracto Sorteo Telebingo', 
+                'ROLE_JUEGO_ESPECIAL':'Juego Especial',
+                'ROLE_MODALIDAD_JUEGO_ESPECIAL':'Modalidad Juego Especial',
+                'ROLE_ESTADO_JUEGO_ESPECIAL':'Estado Juego Especial' ,
+                'ROLE_TIPO_JUEGO_ESPECIAL':'Tipo Juego Especial',
+                'ROLE_LOCALIDAD': 'Localidad',
+                'ROLE_SORTEO_BENEFICO':'Sorteo Benefico',
+                'ROLE_ESCUELA_BENEFICO':'Escuela Benefico',
+                'ROLE_SORTEO_VIVO':'Sorteo Vivo',
+                'ROLE_CLASIFICACION_SUENIOS': 'Clasificación Sueños',
+                'ROLE_NUMERO_SUENIOS':'Números de Sueños',
+                'ROLE_GALERIA': 'Galerías' ,
+                'ROLE_MENU':'Menus',
+                'ROLE_SUBMENU': 'Submenus',
+                'ROLE_SUB_SUBMENU':'Sub-Submenus',
+                'ROLE_USUARIOS':'Usuarios',
+                'ROLE_GRUPOS': 'Grupos'
+} %}
+
+<h4>Roles</h4>
+<ul class="list-group">
+    {% for rol in value %}
+         <li class="list-group-item"> {{roles_array[rol]}}</li>
+    {% endfor %}
+  
+</ul>

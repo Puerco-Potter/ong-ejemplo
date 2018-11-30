@@ -1,0 +1,78 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<style>
+    label {
+        margin-bottom: 0;
+    }
+    .form-group {
+        margin-bottom: .1rem;
+    }
+    .form-control {
+        padding: .25rem .5rem;
+        font-size: .875rem;
+        line-height: 1.5;
+        border-radius: .2rem;
+    }
+    #fos_user_registration_form_ong_SubTematicas .form-check {
+        float: left;
+        margin: 0 5px 5px 0;
+        border: solid thin grey;
+        padding: 0.25rem 0.5rem 0.25rem 2rem;
+    }
+</style>
+
+<div id="loginbox" style="margin-top:50px;" class="mainbox col-md-10 offset-md-1 col-sm-8 offset-sm-2">
+    <div class="card" style="border: 5px solid black; border-radius:4px; box-shadow: -5px -5px;">
+        <div style="background-color:#0075b8">
+            <img class="img-responsive" style="width:25%; margin-left:20px; margin-right:auto;" src="{{ asset('img/logos_head.png')}}" >
+        </div>
+        <div style="padding-top:30px" class="card-body">
+
+            {% form_theme form '@FOSUser/Registration/fields.html.twig' %}
+
+            {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+                <div class="row">
+                    {{ form_row(form.email, {
+                        'label': 'E-mail (Será utilizado para el ingreso)',
+                        'attr': {'col': 'col-6'}
+                    }) }}
+                    {{ form_row(form.plainPassword.first, {
+                        'attr': {'col': 'col-3'}
+                    }) }}
+                    {{ form_row(form.plainPassword.second, {
+                        'attr': {'col': 'col-3'}
+                    }) }}
+
+                    {{ form_row(form.ong.nombreOrganizacion) }}
+                    {{ form_row(form.ong.formaJuridica) }}
+
+                    {{ form_row(form.ong.matricula) }}
+                    {{ form_row(form.ong.cuit) }}
+
+                    {{ form_row(form.ong.tematicas) }}
+                    {{ form_row(form.ong.subTematicas) }}
+                    {{ form_row(form.ong.direccion) }}
+
+                    {{ form_row(form.ong.localidad) }}
+                    {{ form_row(form.ong.codigoPostal) }}
+
+                    {{ form_row(form.ong.telefono) }}
+                    {{ form_row(form.ong.celular) }}
+
+                    {{ form_row(form.cuitCuil) }}
+                    {{ form_row(form.ong.apellido) }}
+                    {{ form_row(form.ong.nombre) }}
+
+                    {{ form_row(form.ong, {
+                        'attr': {'class': 'row', 'col': 'col-12'}
+                    }) }}
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <input type="submit" value="Inscribirme" class="btn btn-primary" />
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

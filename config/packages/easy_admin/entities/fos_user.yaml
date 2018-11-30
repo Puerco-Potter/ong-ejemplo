@@ -1,0 +1,39 @@
+easy_admin:
+    entities:
+        User:
+            class: App\Entity\User
+            role: ROLE_USUARIOS
+            label: 'Usuarios'
+            export_path: '%kernel.root_dir/../var/export/user'
+            password_encoding: { algorithm: 'bcrypt', cost: 12 }
+            list:
+                title: "Usuarios"
+                actions:
+                    - { name: 'new', label: 'Crear Usuario'}
+                fields:
+                    - { property: 'username', label: 'Usuario' ,css_class: 'col-md-2'}
+                    - { property: 'cuitCuil', label: 'CUIT/CUIL', format: '%010s' }
+                    - { property: 'roles', label: 'Roles' }
+                    - { property: 'email', label: 'Email' ,css_class: 'col-md-2'}
+                    - { property: 'enabled', label: 'Activo', css_class: 'col-md-2'}
+            form:
+                title: 'Crear Usuario'
+                fields:
+                    - { type: 'group', css_class: 'col-md-8', label: 'General' }
+                    - { property: 'enabled', label: 'Activo' ,css_class: 'col-md-12'}
+                    - { property: 'username', label: 'Usuario' ,css_class: 'col-md-12'}
+                    - { property: 'email', label: 'Email' ,css_class: 'col-md-12'}
+                    - { property: 'plainPassword', label: 'Contraseña', type: 'password', type_options: { required: false } }
+                    - { property: 'cuitCuil', type: 'text', label: 'CUIT/CUIL', css_class: 'col-md-12'}
+                    - { property: 'roles', label: 'Roles', type: 'admin_roles' }
+            edit:
+                title: 'Editar Usuario'
+            show:
+                title: "Mostrar Usuario"
+                fields:
+                    - { property: 'enabled', label: 'Activo' , css_class: 'col-md-6' }
+                    - { property: 'username', label: 'Usuario', css_class: 'col-md-6' }
+                    - { property: 'email', label: 'Email', css_class: 'col-md-6' }
+                    - { property: 'cuitCuil', label: 'CUIT/CUIL', css_class: 'col-md-6'}
+                    - { property: 'roles', label: 'Roles', css_class: 'col-md-12' }
+

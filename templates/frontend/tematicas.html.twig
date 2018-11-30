@@ -1,0 +1,87 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %}Género{% endblock %}
+{% block stylesheets %}
+  {{parent()}}
+  <style>
+    .tematica_item  {
+      background-color:#black;
+      color:black;
+      height:50px;
+      text-decoration:none;
+      text-align:left;
+    }
+    .tematica_item:hover{
+      background-color:#1879be;
+      color:white;
+      text-decoration:none;
+
+    }
+  </style>
+{% endblock %}
+{% block body %}
+
+    <!-- Page Content -->
+    <div class="container" style="min-height:400px;">
+    <h3 class="mt-4 mb-3">
+       Temáticas
+      </h3> 
+      <div id="accordion">
+        {% for tematica in tematicas %}
+          <div class="card">
+           <span class="oi oi-arrow-right"></span>
+                <button class="btn btn-link tematica_item" style="text-decoration:none;" data-toggle="collapse" data-target="#collapse{{loop.index}}" aria-expanded="true" aria-controls="collapseOne">
+                  <div class="row">
+                    <div class="col-6">{{tematica.nombre}}</div>
+                  <div>
+                </button>
+              
+            <div id="collapse{{loop.index}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body">
+                {% if tematica.ongs %}
+                      <table class="table table-responsive table-striped">
+                          <thead class="thead-dark">
+                              <div class="container"><h6>ONGs QUE TRABAJAN CON {{tematica.nombre|upper}}</h6></div>
+                              <tr>
+                                <th scope="col">NOMBRE</th>
+                                <th scope="col">DIRECCIÓN</th>
+                                <th scope="col">CIUDAD</th>
+                                <th scope="col">TELÉFONO</th>
+                                <th scope="col">EMAIL</th>
+                                <th scope="col">CONDICIÓN</th>
+                                <th scope="col"></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                          {% for ong in tematica.ongs %}
+                            {% if ong.publicado %}
+                              <tr>
+                                  <td>{{ong.nombreOrganizacion}}</td>
+                                  <td>{{ong.direccion}}</td>
+                                  <td>{{ong.localidadesString}}</td>
+                                  <td>{{ong.telefono}}</td>
+                                  <td>{{ong.user.username}}</td>
+                                  <td>{% if ong.matricula is null %}
+                                      No Matriculada
+                                      {% else %}
+                                      Matriculada
+                                      {% endif %}</td>
+                                  <td><a class="btn btn-primary" href="{{path('detalle_ong',{'id':ong.id})}}">Ver ficha</a></td>
+                              </tr>
+                            {% endif %}
+                          {% endfor %}
+                          </tbody>
+                      </table>
+                  {% endif %}
+                  <a href="{{path('ver_tematica',{'id':tematica.id})}}" class="btn btn-primary btn-sm" role="button" aria-disabled="true" style="padding-left:10px;" >
+                        Ver Tématica <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                  </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <br>
+    </div>
+  {% endblock %}
+    

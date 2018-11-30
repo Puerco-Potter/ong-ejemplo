@@ -1,0 +1,28 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %}Género{% endblock %}
+
+{% block body %}
+<!-- Page Content -->
+    <div class="container" style="min-height:400px;">
+      <!-- Page Heading/Breadcrumbs -->
+      <h1 class="mt-4 mb-3" >Institucional
+      </h1> 
+      <div class="row">
+            <!-- Blog Entries Column -->
+            <div class="col-md-12">
+                <!-- Blog Post -->
+                <div class="card mb-12">
+                    <div class="card-body">
+                        {{ contenido|raw }}
+                        {% for imagen in contenidoEntidad.imagenes %}
+                            <img class="card-img-top" src="{{asset('uploads/resources/'~imagen.path)}}" alt="">
+                        {% endfor %}
+                    <p class="card-text">
+                    </div>  
+                </div>
+            </div>
+        </div> 
+    </div>
+  {% endblock %}
+    
